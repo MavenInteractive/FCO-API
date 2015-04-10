@@ -9,8 +9,8 @@ Reserved endpoints
 
 ## Installation
 
-1. See [http://laravel.com/docs/5.0/installation](Laravel Installation).
+1. See [Laravel installation page](http://laravel.com/docs/5.0/installation).
 2. Create your database.
 3. Run your migration and seed your tables.
 
-Use [http://laravel.com/docs/5.0/homestead](Laravel Homestead) v 0.2.5 for development setup.
+Use [Laravel Homestead](http://laravel.com/docs/5.0/homestead) v 0.2.5 for development setup.
