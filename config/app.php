@@ -149,6 +149,11 @@ return [
 		 * JWT Auth
 		 */
 		'Tymon\JWTAuth\Providers\JWTAuthServiceProvider',
+
+		/*
+		 * Laravel Cors
+		*/
+		'Barryvdh\Cors\CorsServiceProvider',
 	],
 
 	/*
