@@ -19,3 +19,9 @@ Route::controllers([
 	'auth'     => 'Auth\AuthController',
 	'password' => 'Auth\PasswordController',
 ]);
+
+
+Route::group(['prefix' => 'v1'], function() {
+    Route::resource('users', 'UserController');
+});
+
