@@ -1,13 +1,12 @@
 <?php namespace App\Http\Controllers;
 
 use App\Http\Requests;
-use App\Http\Controllers\Controller;
-use App\Categories;
-
+use App\Callouts;
 use Input;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
-class CategoryController extends Controller {
+class CalloutController extends Controller {
 
 	/**
 	 * Display a listing of the resource.
@@ -24,7 +23,7 @@ class CategoryController extends Controller {
 			//
 		}
 
-		$result = Categories::all();
+		$result = Callouts::all();
 
 		if ($result->isEmpty()) {
 			return response()->json(['error' => 'no_result_found']);
@@ -61,13 +60,7 @@ class CategoryController extends Controller {
 	 */
 	public function show($id)
 	{
-		$result = Categories::where('id', $id)->get();
-
-		if ($result->isEmpty()) {
-			return response()->json(['error' => 'no_result_found']);
-		}
-
-		return response()->json($result);
+		//
 	}
 
 	/**
@@ -78,13 +71,7 @@ class CategoryController extends Controller {
 	 */
 	public function edit($id)
 	{
-		$result = Categories::where('id', $id)->get();
-
-		if ($result->isEmpty()) {
-			return response()->json(['error' => 'no_result_found']);
-		}
-
-		return response()->json($result);
+		//
 	}
 
 	/**

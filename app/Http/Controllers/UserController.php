@@ -37,10 +37,10 @@ class UserController extends Controller {
 		$result = User::all();
 
 		if ($result->isEmpty()) {
-			return response()->json(['error' => 'No result found.'], Response::HTTP_NO_CONTENT);
+			return response()->json(['error' => 'no_result_found']);
 		}
 
-		return response()->json($result, Response::HTTP_OK);
+		return response()->json($result);
 	}
 
 	/**
@@ -74,10 +74,10 @@ class UserController extends Controller {
 		$result = User::where('id', $id)->get();
 
 		if ($result->isEmpty()) {
-			return response()->json(['error' => 'No result found.'], Response::HTTP_NO_CONTENT);
+			return response()->json(['error' => 'no_result_found']);
 		}
 
-		return response()->json($result, Response::HTTP_OK);
+		return response()->json($result);
 	}
 
 	/**
@@ -91,10 +91,10 @@ class UserController extends Controller {
 		$result = User::where('id', $id)->get();
 
 		if ($result->isEmpty()) {
-			return response()->json(['error' => 'No result found.'], Response::HTTP_NO_CONTENT);
+			return response()->json(['error' => 'no_result_found']);
 		}
 
-		return response()->json($result, Response::HTTP_OK);
+		return response()->json($result);
 	}
 
 	/**
@@ -130,7 +130,7 @@ class UserController extends Controller {
 		$credentials = Input::only('email', 'username', 'password', 'confirm_password');
 
 		if ($credentials['password'] <> $credentials['confirm_password']) {
-			return response()->json(['error' => 'Password mismatch.'], Response::HTTP_NOT_ACCEPTABLE);
+			return response()->json(['error' => 'password_mismatch'], Response::HTTP_NOT_ACCEPTABLE);
 		}
 
 		try {
@@ -139,7 +139,7 @@ class UserController extends Controller {
 
 			$user = User::create($credentials);
 		} catch (\Exception $error) {
-			return response()->json(['error' => 'User already exists.'], Response::HTTP_CONFLICT);
+			return response()->json(['error' => 'user_already_exists'], Response::HTTP_CONFLICT);
 		}
 
 		$token = JWTAuth::fromUser($user);
@@ -165,11 +165,11 @@ class UserController extends Controller {
 				$credentials = ['username' => $input['email'], 'password' => $input['password']];
 
 				if ( ! $token = JWTAuth::attempt($credentials)) {
-					return response()->json(['error' => 'Invalid credentials.'], Response::HTTP_NOT_FOUND);
+					return response()->json(['error' => 'invalid_credentials'], Response::HTTP_NOT_FOUND);
 				}
 			}
 		} catch (\Exception $error) {
-			return response()->json(['error' => 'Invalid credentials.'], Response::HTTP_NOT_FOUND);
+			return response()->json(['error' => 'invalid_credentials'], Response::HTTP_NOT_FOUND);
 		}
 
 		return response()->json(compact('token'));
