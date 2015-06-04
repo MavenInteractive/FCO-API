@@ -20,8 +20,21 @@ Route::controllers([
 	'password' => 'Auth\PasswordController',
 ]);
 
+Route::group(['prefix' => 'api/v1.0'], function() {
+    Route::post('auth/register', ['as' => 'api.v1.0.auth.register', 'uses' => 'UserController@register']);
+    Route::post('auth/login', ['as' => 'api.v1.0.auth.login', 'uses' => 'UserController@login']);
+    Route::get('auth/logout', ['as' => 'api.v1.0.auth.logout', 'uses' => 'UserController@logout']);
+    Route::post('auth/reset', ['as' => 'api.v1.0.auth.reset', 'uses' => 'UserController@reset']);
+});
 
-Route::group(['prefix' => 'v1'], function() {
+Route::group([
+        'prefix'     => 'api/v1.0',
+        'middleware' => [
+            'before' => 'jwt.auth',
+            'after'  => 'jwt.refresh'
+        ]
+    ], function() {
     Route::resource('users', 'UserController');
+    Route::resource('categories', 'CategoryController');
 });
 
