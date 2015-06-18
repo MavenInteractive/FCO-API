@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Eloquent\Model;
 
-class Callouts extends Model {
+class Callout extends Model {
 
     /**
      * The database table used by the model.
@@ -17,6 +17,5 @@ class Callouts extends Model {
      * @var array
      */
     protected $fillable = [];
-
 
 }

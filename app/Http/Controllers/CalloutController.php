@@ -1,7 +1,7 @@
 <?php namespace App\Http\Controllers;
 
 use App\Http\Requests;
-use App\Callouts;
+use App\Callout;
 use Input;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -17,19 +17,53 @@ class CalloutController extends Controller {
 	{
 		$input = Input::only('q', 'page', 'limit', 'sort');
 
-		if (count($input) > 0) {
-			//
-		} else {
-			//
-		}
+		$callout = new Callout;
 
-		$result = Callouts::all();
+		try {
+			if (isset($input['q'])) {
+				$callout = $callout->where('title', 'like', '%' . $input['q'] . '%');
+			}
 
-		if ($result->isEmpty()) {
+			if (isset($input['page'])) {
+				$callout = $callout->skip($input['page']);
+			}
+
+			if (isset($input['limit'])) {
+				$callout = $callout->take($input['limit']);
+			}
+
+			if (isset($input['sort'])) {
+				$sort = explode(',', $input['sort']);
+
+				if (is_array($sort) && count($sort) > 0) {
+					foreach ($sort as $key => $value) {
+						$str = trim($value, '+-');
+
+						if (strpos($value, '-') === 0) {
+							$callout = $callout->orderBy(trim($str), 'desc');
+						} else {
+							$callout = $callout->orderBy(trim($str), 'asc');
+						}
+					}
+				} else {
+					if (strpos($sort, '-') === 0) {
+						$callout = $callout->orderBy(trim($sort, '-'), 'desc');
+					} else {
+						$callout = $callout->orderBy(trim($sort, '+'), 'asc');
+					}
+				}
+			}
+
+			$result = $callout->get();
+
+			if ( ! $result->count()) {
+				return response()->json(['error' => 'no_result_found']);
+			}
+
+			return response()->json($result);
+		} catch (\Exception $error) {
 			return response()->json(['error' => 'no_result_found']);
 		}
-
-		return response()->json($result);
 	}
 
 	/**
@@ -60,7 +94,17 @@ class CalloutController extends Controller {
 	 */
 	public function show($id)
 	{
-		//
+		try {
+			$result = Callout::findOrFail($id);
+
+			if ( ! $result->count()) {
+				return response()->json(['error' => 'no_result_found']);
+			}
+
+			return response()->json($result);
+		} catch (\Exception $error) {
+			return response()->json(['error' => 'no_result_found']);
+		}
 	}
 
 	/**
@@ -71,7 +115,17 @@ class CalloutController extends Controller {
 	 */
 	public function edit($id)
 	{
-		//
+		try {
+			$result = Callout::findOrFail($id);
+
+			if ( ! $result->count()) {
+				return response()->json(['error' => 'no_result_found']);
+			}
+
+			return response()->json($result);
+		} catch (\Exception $error) {
+			return response()->json(['error' => 'no_result_found']);
+		}
 	}
 
 	/**

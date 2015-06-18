@@ -28,19 +28,53 @@ class UserController extends Controller {
 
 		$input = Input::only('q', 'page', 'limit', 'sort');
 
-		if (count($input) > 0) {
-			//
-		} else {
-			//
-		}
+		$user = new User;
 
-		$result = User::all();
+		try {
+			if (isset($input['q'])) {
+				//$user = $user->where('description', 'like', '%' . $input['q'] . '%');
+			}
 
-		if ($result->isEmpty()) {
+			if (isset($input['page'])) {
+				$user = $user->skip($input['page']);
+			}
+
+			if (isset($input['limit'])) {
+				$user = $user->take($input['limit']);
+			}
+
+			if (isset($input['sort'])) {
+				$sort = explode(',', $input['sort']);
+
+				if (is_array($sort) && count($sort) > 0) {
+					foreach ($sort as $key => $value) {
+						$str = trim($value, '+-');
+
+						if (strpos($value, '-') === 0) {
+							$user = $user->orderBy(trim($str), 'desc');
+						} else {
+							$user = $user->orderBy(trim($str), 'asc');
+						}
+					}
+				} else {
+					if (strpos($sort, '-') === 0) {
+						$user = $user->orderBy(trim($sort, '-'), 'desc');
+					} else {
+						$user = $user->orderBy(trim($sort, '+'), 'asc');
+					}
+				}
+			}
+
+			$result = $user->get();
+
+			if ( ! $result->count()) {
+				return response()->json(['error' => 'no_result_found']);
+			}
+
+			return response()->json($result);
+		} catch (\Exception $error) {
 			return response()->json(['error' => 'no_result_found']);
 		}
-
-		return response()->json($result);
 	}
 
 	/**
@@ -71,13 +105,17 @@ class UserController extends Controller {
 	 */
 	public function show($id)
 	{
-		$result = User::where('id', $id)->get();
+		try {
+			$result = User::findOrFail($id);
 
-		if ($result->isEmpty()) {
+			if ( ! $result->count()) {
+				return response()->json(['error' => 'no_result_found']);
+			}
+
+			return response()->json($result);
+		} catch (\Exception $error) {
 			return response()->json(['error' => 'no_result_found']);
 		}
-
-		return response()->json($result);
 	}
 
 	/**
@@ -88,13 +126,17 @@ class UserController extends Controller {
 	 */
 	public function edit($id)
 	{
-		$result = User::where('id', $id)->get();
+		try {
+			$result = Callout::findOrFail($id);
 
-		if ($result->isEmpty()) {
+			if ( ! $result->count()) {
+				return response()->json(['error' => 'no_result_found']);
+			}
+
+			return response()->json($result);
+		} catch (\Exception $error) {
 			return response()->json(['error' => 'no_result_found']);
 		}
-
-		return response()->json($result);
 	}
 
 	/**

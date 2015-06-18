@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Eloquent\Model;
 
-class Views extends Model {
+class View extends Model {
 
 	//
 
