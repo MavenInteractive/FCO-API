@@ -1,6 +1,7 @@
 <?php namespace App\Http\Controllers;
 
 use App\Http\Requests;
+use App\Http\Controllers\Controller;
 use App\Callout;
 use Input;
 use Illuminate\Http\Request;
@@ -62,7 +63,7 @@ class CalloutController extends Controller {
 
 			return response()->json($result);
 		} catch (\Exception $error) {
-			return response()->json(['error' => 'no_result_found']);
+			return response()->json(['error' => 'bad_request'], Response::HTTP_BAD_REQUEST);
 		}
 	}
 
@@ -103,7 +104,7 @@ class CalloutController extends Controller {
 
 			return response()->json($result);
 		} catch (\Exception $error) {
-			return response()->json(['error' => 'no_result_found']);
+			return response()->json(['error' => 'bad_request'], Response::HTTP_BAD_REQUEST);
 		}
 	}
 
@@ -124,7 +125,7 @@ class CalloutController extends Controller {
 
 			return response()->json($result);
 		} catch (\Exception $error) {
-			return response()->json(['error' => 'no_result_found']);
+			return response()->json(['error' => 'bad_request'], Response::HTTP_BAD_REQUEST);
 		}
 	}
 
@@ -147,7 +148,15 @@ class CalloutController extends Controller {
 	 */
 	public function destroy($id)
 	{
-		//
+		try {
+			$result = Callout::findOrFail($id);
+
+			$result->destroy();
+
+			return response()->json(['success' => 'success_message']);
+		} catch (\Exception $error) {
+			return response()->json(['error' => 'bad_request'], Response::HTTP_BAD_REQUEST);
+		}
 	}
 
 }

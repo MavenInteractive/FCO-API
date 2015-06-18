@@ -73,7 +73,7 @@ class UserController extends Controller {
 
 			return response()->json($result);
 		} catch (\Exception $error) {
-			return response()->json(['error' => 'no_result_found']);
+			return response()->json(['error' => 'bad_request'], Response::HTTP_BAD_REQUEST);
 		}
 	}
 
@@ -114,7 +114,7 @@ class UserController extends Controller {
 
 			return response()->json($result);
 		} catch (\Exception $error) {
-			return response()->json(['error' => 'no_result_found']);
+			return response()->json(['error' => 'bad_request'], Response::HTTP_BAD_REQUEST);
 		}
 	}
 
@@ -135,7 +135,7 @@ class UserController extends Controller {
 
 			return response()->json($result);
 		} catch (\Exception $error) {
-			return response()->json(['error' => 'no_result_found']);
+			return response()->json(['error' => 'bad_request'], Response::HTTP_BAD_REQUEST);
 		}
 	}
 
@@ -158,7 +158,15 @@ class UserController extends Controller {
 	 */
 	public function destroy($id)
 	{
-		//
+		try {
+			$result = User::findOrFail($id);
+
+			$result->destroy();
+
+			return response()->json(['success' => 'success_message']);
+		} catch (\Exception $error) {
+			return response()->json(['error' => 'bad_request'], Response::HTTP_BAD_REQUEST);
+		}
 	}
 
 	/**
