@@ -1,6 +1,6 @@
 <html>
 	<head>
-		<title>Fight CallOut</title>
+		<title>Fight Call Out</title>
 
 		<link href='//fonts.googleapis.com/css?family=Lato:100' rel='stylesheet' type='text/css'>
 
@@ -40,7 +40,7 @@
 	<body>
 		<div class="container">
 			<div class="content">
-				<div class="title">Fight CallOut</div>
+				<div class="title">Fight Call Out</div>
 				<div class="quote">{{ Inspiring::quote() }}</div>
 			</div>
 		</div>
