@@ -28,7 +28,7 @@ class UsersTableSeeder extends Seeder {
 
 		$data = array();
 
-		foreach (range(1, 20) as $value) {
+		foreach (range(1, 19) as $value) {
 			$data[] = array(
 				'name'     => $faker->name,
 				'email'    => $faker->safeEmail,
