@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class PostsTableSeeder extends Seeder {
+class UploadsTableSeeder extends Seeder {
 
 	/**
 	 * Run the database seeds.
@@ -11,9 +11,7 @@ class PostsTableSeeder extends Seeder {
 	 */
 	public function run()
 	{
-		DB::table('posts')->delete();
-
-		//DB::table('posts')->insert();
+		DB::table('uploads')->delete();
 	}
 
 }

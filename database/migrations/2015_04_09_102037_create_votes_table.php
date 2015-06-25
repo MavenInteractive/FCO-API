@@ -16,13 +16,13 @@ class CreateVotesTable extends Migration {
 		{
 			$table->increments('id');
 			$table->integer('user_id')->unsigned();
-			$table->integer('post_id')->unsigned();
+			$table->integer('callout_id')->unsigned();
 			$table->smallInteger('tally');
 			$table->string('status');
 			$table->timestamps();
 
 			$table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade');
-			$table->foreign('post_id')->references('id')->on('posts')->onUpdate('cascade');
+			$table->foreign('callout_id')->references('id')->on('callouts')->onUpdate('cascade');
 		});
 	}
 

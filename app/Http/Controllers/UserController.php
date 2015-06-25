@@ -94,7 +94,7 @@ class UserController extends Controller {
 	 */
 	public function store()
 	{
-		//
+		// Todo transfer registration in here. :D
 	}
 
 	/**
@@ -105,17 +105,7 @@ class UserController extends Controller {
 	 */
 	public function show($id)
 	{
-		try {
-			$result = User::findOrFail($id);
-
-			if ( ! $result->count()) {
-				return response()->json(['error' => 'no_result_found']);
-			}
-
-			return response()->json($result);
-		} catch (\Exception $error) {
-			return response()->json(['error' => 'bad_request'], Response::HTTP_BAD_REQUEST);
-		}
+		//
 	}
 
 	/**
@@ -127,7 +117,7 @@ class UserController extends Controller {
 	public function edit($id)
 	{
 		try {
-			$result = Callout::findOrFail($id);
+			$result = User::findOrFail($id);
 
 			if ( ! $result->count()) {
 				return response()->json(['error' => 'no_result_found']);
@@ -147,7 +137,21 @@ class UserController extends Controller {
 	 */
 	public function update($id)
 	{
-		//
+		try {
+			$result = User::findOrFail($id);
+
+			if ( ! $result->count()) {
+				return response()->json(['error' => 'no_result_found']);
+			}
+
+			$input = Request::all();
+
+			dd($input);
+
+
+		} catch (\Exception $error) {
+			return response()->json(['error' => 'bad_request'], Response::HTTP_BAD_REQUEST);
+		}
 	}
 
 	/**

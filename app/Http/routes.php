@@ -21,20 +21,28 @@ Route::controllers([
 ]);
 
 Route::group(['prefix' => 'api/v1.0'], function() {
-    Route::post('auth/register', ['as' => 'api.v1.0.auth.register', 'uses' => 'UserController@register']);
-    Route::post('auth/login', ['as' => 'api.v1.0.auth.login', 'uses' => 'UserController@login']);
-    Route::post('auth/reset', ['as' => 'api.v1.0.auth.reset', 'uses' => 'UserController@reset']);
-    Route::get('auth/logout', ['as' => 'api.v1.0.auth.logout', 'uses' => 'UserController@logout']);
+    Route::post('auth/register', ['as' => 'auth.register', 'uses' => 'UserController@register']);
+    Route::post('auth/login', ['as' => 'auth.login', 'uses' => 'UserController@login']);
+    Route::post('auth/reset', ['as' => 'auth.reset', 'uses' => 'UserController@reset']);
+    Route::get('auth/logout', ['as' => 'auth.logout', 'uses' => 'UserController@logout']);
 });
 
 Route::group([
-        'prefix'     => 'api/v1.0',
-        'middleware' => [
-            'before' => 'jwt.auth'
-        ]
-    ], function() {
-    Route::resource('users', 'UserController');
-    Route::resource('categories', 'CategoryController');
-    Route::resource('callouts', 'CalloutController');
+    'prefix'     => 'api/v1.0',
+    'middleware' => [
+        'before' => 'jwt.auth'
+    ]], function() {
+        Route::resource('users', 'UserController', [
+            'except' => ['create', 'store', 'show'],
+            'names'  => ['index' => 'users.index', 'edit' => 'users.edit', 'update' => 'users.update', 'destroy' => 'users.destroy']
+        ]);
+        Route::resource('categories', 'CategoryController', [
+            'except' => ['create', 'show'],
+            'names'  => ['index' => 'categories.index', 'store' => 'categories.store', 'edit' => 'categories.edit', 'update' => 'categories.update', 'destroy' => 'categories.destroy']
+        ]);
+        Route::resource('callouts', 'CalloutController', [
+            'except' => ['create', 'show'],
+            'names'  => ['index' => 'callouts.index', 'store' => 'callouts.store', 'edit' => 'callouts.edit', 'update' => 'callouts.update', 'destroy' => 'callouts.destroy']
+        ]);
 });
 
