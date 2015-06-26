@@ -9,7 +9,7 @@ class Callout extends Model {
      *
      * @var string
      */
-    protected $table = 'posts';
+    protected $table = 'callouts';
 
     /**
      * The attributes that are mass assignable.
