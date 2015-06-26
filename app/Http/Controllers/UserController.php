@@ -19,13 +19,6 @@ class UserController extends Controller {
 	 */
 	public function index()
 	{
-		// try {
-		// 	$token = JWTAuth::getToken();
-		// 	$user  = JWTAuth::toUser($token);
-		// } catch (\Exception $error) {
-		// 	return response()->json(['error' => 'Unauthorized access.'], Response::HTTP_UNAUTHORIZED);
-		// }
-
 		$input = Input::only('q', 'page', 'limit', 'sort');
 
 		$user = new User;
@@ -119,13 +112,9 @@ class UserController extends Controller {
 		try {
 			$result = User::findOrFail($id);
 
-			if ( ! $result->count()) {
-				return response()->json(['error' => 'no_result_found']);
-			}
-
 			return response()->json($result);
 		} catch (\Exception $error) {
-			return response()->json(['error' => 'bad_request'], Response::HTTP_BAD_REQUEST);
+			return response()->json(['error' => 'no_result_found'], Response::HTTP_BAD_REQUEST);
 		}
 	}
 
@@ -135,22 +124,25 @@ class UserController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function update($id)
+	public function update(Request $request, $id)
 	{
 		try {
 			$result = User::findOrFail($id);
 
-			if ( ! $result->count()) {
-				return response()->json(['error' => 'no_result_found']);
-			}
+			$result->first_name  = $request->input('first_name');
+			$result->last_name   = $request->input('last_name');
+			$result->email       = $request->input('email');
+			$result->photo       = $request->input('photo');
+			$result->role_id     = $request->input('role_id');
+			$result->category_id = $request->input('category_id');
+			$result->birth_date  = $request->input('birth_date');
+			$result->gender      = $request->input('gender');
 
-			$input = Request::all();
+			$result->save();
 
-			dd($input);
-
-
+			return response()->json(['success' => 'success_message']);
 		} catch (\Exception $error) {
-			return response()->json(['error' => 'bad_request'], Response::HTTP_BAD_REQUEST);
+			return response()->json(['error' => 'failed_to_update'], Response::HTTP_INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -169,7 +161,7 @@ class UserController extends Controller {
 
 			return response()->json(['success' => 'success_message']);
 		} catch (\Exception $error) {
-			return response()->json(['error' => 'bad_request'], Response::HTTP_BAD_REQUEST);
+			return response()->json(['error' => 'no_result_found'], Response::HTTP_BAD_REQUEST);
 		}
 	}
 
@@ -188,8 +180,10 @@ class UserController extends Controller {
 		}
 
 		try {
-			$credentials['password'] = Hash::make($credentials['password']);
-			$credentials['role_id']  = 2;
+			$credentials['password']    = Hash::make($credentials['password']);
+			$credentials['role_id']     = 2;
+			$credentials['category_id'] = 1;
+			$credentials['status']      = 'A';
 
 			$user = User::create($credentials);
 		} catch (\Exception $error) {

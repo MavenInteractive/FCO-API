@@ -84,7 +84,17 @@ class CategoryController extends Controller {
 	 */
 	public function store()
 	{
-		//
+		$input = Input::only('description');
+
+		try {
+			$input['status'] = 'A';
+
+			$category = Category::create($input);
+
+			return response()->json(['success' => 'success_message']);
+		} catch (\Exception $error) {
+			return response()->json(['error' => 'failed_to_create'], Response::HTTP_INTERNAL_SERVER_ERROR);
+		}
 	}
 
 	/**
@@ -95,17 +105,7 @@ class CategoryController extends Controller {
 	 */
 	public function show($id)
 	{
-		try {
-			$result = Category::findOrFail($id);
-
-			if ( ! $result->count()) {
-				return response()->json(['error' => 'no_result_found']);
-			}
-
-			return response()->json($result);
-		} catch (\Exception $error) {
-			return response()->json(['error' => 'bad_request'], Response::HTTP_BAD_REQUEST);
-		}
+		//
 	}
 
 	/**
@@ -119,13 +119,9 @@ class CategoryController extends Controller {
 		try {
 			$result = Category::findOrFail($id);
 
-			if ( ! $result->count()) {
-				return response()->json(['error' => 'no_result_found']);
-			}
-
 			return response()->json($result);
 		} catch (\Exception $error) {
-			return response()->json(['error' => 'bad_request'], Response::HTTP_BAD_REQUEST);
+			return response()->json(['error' => 'no_result_found'], Response::HTTP_BAD_REQUEST);
 		}
 	}
 
@@ -135,9 +131,19 @@ class CategoryController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function update($id)
+	public function update(Request $request, $id)
 	{
-		//
+		try {
+			$result = Category::findOrFail($id);
+
+			$result->description = $request->input('description');
+
+			$result->save();
+
+			return response()->json(['success' => 'success_message']);
+		} catch (\Exception $error) {
+			return response()->json(['error' => 'failed_to_update'], Response::HTTP_INTERNAL_SERVER_ERROR);
+		}
 	}
 
 	/**
@@ -155,7 +161,7 @@ class CategoryController extends Controller {
 
 			return response()->json(['success' => 'success_message']);
 		} catch (\Exception $error) {
-			return response()->json(['error' => 'bad_request'], Response::HTTP_BAD_REQUEST);
+			return response()->json(['error' => 'no_result_found'], Response::HTTP_BAD_REQUEST);
 		}
 	}
 
