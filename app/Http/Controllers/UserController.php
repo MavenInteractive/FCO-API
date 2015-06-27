@@ -112,6 +112,9 @@ class UserController extends Controller {
 		try {
 			$result = User::findOrFail($id);
 
+			$result->role;
+			$result->category;
+
 			return response()->json($result);
 		} catch (\Exception $error) {
 			return response()->json(['error' => 'no_result_found'], Response::HTTP_BAD_REQUEST);
@@ -132,7 +135,6 @@ class UserController extends Controller {
 			$result->first_name  = $request->input('first_name');
 			$result->last_name   = $request->input('last_name');
 			$result->email       = $request->input('email');
-			$result->photo       = $request->input('photo');
 			$result->role_id     = $request->input('role_id');
 			$result->category_id = $request->input('category_id');
 			$result->birth_date  = $request->input('birth_date');
@@ -230,6 +232,17 @@ class UserController extends Controller {
 	 * @return Response
 	 */
 	public function reset()
+	{
+
+	}
+
+	/**
+	 * Change user photo.
+	 *
+	 * @param  none
+	 * @return Response
+	 */
+	public function photo()
 	{
 
 	}

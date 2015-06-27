@@ -22,7 +22,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      *
      * @var array
      */
-    protected $fillable = ['name', 'email', 'password', 'role_id', 'username', 'photo', 'app_key', 'status', 'first_name', 'last_name', 'reset_password_token', 'reset_password_expiration', 'upload_id'];
+    protected $fillable = ['first_name', 'last_name', 'name', 'username', 'email', 'password', 'role_id', 'category_id', 'photo', 'reset_password_token', 'reset_password_expiration', 'birth_date', 'gender', 'status'];
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -38,7 +38,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      */
     public function role()
     {
-        return $this->hasOne('App\Role');
+        return $this->belongsTo('App\Role');
     }
 
     /**
@@ -48,7 +48,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      */
     public function category()
     {
-        return $this->hasOne('App\Category');
+        return $this->belongsTo('App\Category');
     }
 
     /**
@@ -56,7 +56,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      *
      * @return object
      */
-    public function callouts()
+    public function callout()
     {
         return $this->hasMany('App\Callout');
     }

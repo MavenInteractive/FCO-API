@@ -16,7 +16,7 @@ class Callout extends Model {
      *
      * @var array
      */
-    protected $fillable = [];
+    protected $fillable = ['user_id', 'category_id', 'title', 'description', 'fighter_a', 'fighter_b', 'photo', 'video', 'details_date', 'details_venue', 'total_comments', 'total_views', 'total_votes', 'status'];
 
     /**
      * The users relationship.

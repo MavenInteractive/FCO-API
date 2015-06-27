@@ -21,8 +21,8 @@ class CreateCalloutsTable extends Migration {
 			$table->text('description');
 			$table->string('fighter_a');
 			$table->string('fighter_b');
-			$table->string('photo');
-			$table->string('video');
+			$table->string('photo')->nullable();
+			$table->string('video')->nullable();
 			$table->date('details_date');
 			$table->string('details_venue');
 			$table->smallInteger('total_comments');

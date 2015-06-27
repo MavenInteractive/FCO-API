@@ -30,7 +30,7 @@ class Vote extends Model {
      *
      * @return object
      */
-    public function callout()
+    public function callouts()
     {
         return $this->belongsTo('App\Callout');
     }

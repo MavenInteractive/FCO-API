@@ -32,7 +32,7 @@ class Category extends Model {
      */
     public function user()
     {
-        return $this->belongsTo('App\User');
+        return $this->hasMany('App\User');
     }
 
     /**
@@ -40,7 +40,7 @@ class Category extends Model {
      *
      * @return object
      */
-    public function callouts()
+    public function callout()
     {
         return $this->hasMany('App\Callout');
     }
