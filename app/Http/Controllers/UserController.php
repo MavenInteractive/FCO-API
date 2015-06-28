@@ -2,11 +2,14 @@
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Upload;
 use App\User;
 use Hash;
 use Input;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 use JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
 
@@ -242,9 +245,37 @@ class UserController extends Controller {
 	 * @param  none
 	 * @return Response
 	 */
-	public function photo()
+	public function photo(Request $request, $id)
 	{
+		try {
+			$file = $request->file('photo');
 
+			$fileName = $file->getFilename();
+			$ext      = $file->getClientOriginalExtension();
+			$mime     = $file->getClientMimeType();
+
+			Storage::disk('local')->put($fileName . '.' . $ext, File::get($file));
+
+			$photo = [
+				'type'          => 'user',
+				'format'        => $mime,
+				'value'         => $id,
+				'is_primary'    => true,
+				'file_url'      => $fileName . '.' . $ext,
+				'thumbnail_url' => $fileName . '.' . $ext,
+				'status'        => 'A'
+			];
+
+			$photo = Upload::create($photo);
+
+			$user = User::find($id);
+			$user->photo = $photo->id;
+			$user->save();
+
+			return response()->json(['success' => 'success_message']);
+		} catch (\Exception $error) {
+			return response()->json(['error' => 'failed_to_upload'], Response::HTTP_INTERNAL_SERVER_ERROR);
+		}
 	}
 
 	/**

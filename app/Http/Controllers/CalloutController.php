@@ -155,7 +155,6 @@ class CalloutController extends Controller {
 
 			return response()->json(['success' => 'success_message']);
 		} catch (\Exception $error) {
-			dd($error);
 			return response()->json(['error' => 'failed_to_update'], Response::HTTP_INTERNAL_SERVER_ERROR);
 		}
 	}
