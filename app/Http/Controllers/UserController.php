@@ -259,7 +259,6 @@ class UserController extends Controller {
 			$photo = [
 				'type'          => 'user',
 				'format'        => $mime,
-				'value'         => $id,
 				'is_primary'    => true,
 				'file_url'      => $fileName . '.' . $ext,
 				'thumbnail_url' => $fileName . '.' . $ext,

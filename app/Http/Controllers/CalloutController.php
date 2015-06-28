@@ -2,10 +2,13 @@
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Upload;
 use App\Callout;
 use Input;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 
 class CalloutController extends Controller {
 
@@ -82,11 +85,38 @@ class CalloutController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function store()
+	public function store(Request $request)
 	{
 		$input = Input::only('user_id', 'category_id', 'title', 'description', 'fighter_a', 'fighter_b', 'photo', 'video', 'details_date', 'details_venue');
 
 		try {
+			foreach (['photo', 'video'] as $value) {
+				$file = $request->file($value);
+
+				if ( ! $file) {
+					continue;
+				}
+
+				$fileName = $file->getFilename();
+				$ext      = $file->getClientOriginalExtension();
+				$mime     = $file->getClientMimeType();
+
+				Storage::disk('local')->put($fileName . '.' . $ext, File::get($file));
+
+				$upload = [
+					'type'          => 'user',
+					'format'        => $mime,
+					'is_primary'    => true,
+					'file_url'      => $fileName . '.' . $ext,
+					'thumbnail_url' => $fileName . '.' . $ext,
+					'status'        => 'A'
+				];
+
+				$upload = Upload::create($upload);
+
+				$input[$value] = $upload->id;
+			}
+
 			$input['total_comments'] = 0;
 			$input['total_views']    = 0;
 			$input['total_votes']    = 0;
