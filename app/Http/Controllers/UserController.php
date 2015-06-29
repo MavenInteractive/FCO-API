@@ -225,7 +225,7 @@ class UserController extends Controller {
 			return response()->json(['error' => 'invalid_credentials'], Response::HTTP_NOT_FOUND);
 		}
 
-		return response()->json(compact('token'));
+		return response()->json(['user' => JWTAuth::toUser($token), 'token' => $token]);
 	}
 
 	/**
