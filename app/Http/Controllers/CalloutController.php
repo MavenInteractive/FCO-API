@@ -87,7 +87,7 @@ class CalloutController extends Controller {
 	 */
 	public function store(Request $request)
 	{
-		$input = Input::only('user_id', 'category_id', 'title', 'description', 'fighter_a', 'fighter_b', 'photo', 'video', 'details_date', 'details_time', 'details_venue');
+		$input = Input::only('user_id', 'category_id', 'title', 'description', 'fighter_a', 'fighter_b', 'photo', 'video', 'match_type', 'details_date', 'details_time', 'details_venue');
 
 		try {
 			foreach (['photo', 'video'] as $value) {
@@ -178,6 +178,7 @@ class CalloutController extends Controller {
 			$result->description   = $request->input('description');
 			$result->fighter_a     = $request->input('fighter_a');
 			$result->fighter_b     = $request->input('fighter_b');
+			$result->match_type    = $request->input('match_type');
 			$result->details_date  = $request->input('details_date');
 			$result->details_time  = $request->input('details_time');
 			$result->details_venue = $request->input('details_venue');

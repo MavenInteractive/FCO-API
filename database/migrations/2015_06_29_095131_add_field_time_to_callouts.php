@@ -19,6 +19,7 @@ class AddFieldTimeToCallouts extends Migration {
 			$table->date('details_date')->nullable()->change();
 			$table->time('details_time')->nullable()->after('details_date');
 			$table->string('details_venue')->nullable()->change();
+			$table->string('match_type')->nullable()->after('video');
 		});
 	}
 
