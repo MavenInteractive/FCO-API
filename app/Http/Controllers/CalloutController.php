@@ -104,7 +104,7 @@ class CalloutController extends Controller {
 				Storage::disk('local')->put($fileName . '.' . $ext, File::get($file));
 
 				$upload = [
-					'type'          => 'user',
+					'type'          => 'callout',
 					'format'        => $mime,
 					'is_primary'    => true,
 					'file_url'      => $fileName . '.' . $ext,

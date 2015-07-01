@@ -45,5 +45,8 @@ Route::group([
             'except' => ['create', 'show'],
             'names'  => ['index' => 'callouts.index', 'store' => 'callouts.store', 'edit' => 'callouts.edit', 'update' => 'callouts.update', 'destroy' => 'callouts.destroy']
         ]);
+        Route::resource('roles', 'RoleController', [
+            'only' => ['index'],
+            'names'  => ['index' => 'roles.index']
+        ]);
 });
-
