@@ -61,6 +61,7 @@ class UserController extends Controller {
 				}
 			}
 
+			$user   = $user->with('role')->with('category');
 			$result = $user->get();
 
 			if ( ! $result->count()) {
@@ -113,10 +114,7 @@ class UserController extends Controller {
 	public function edit($id)
 	{
 		try {
-			$result = User::findOrFail($id);
-
-			$result->role;
-			$result->category;
+			$result = User::with('role')->with('category')->findOrFail($id);
 
 			return response()->json($result);
 		} catch (\Exception $error) {

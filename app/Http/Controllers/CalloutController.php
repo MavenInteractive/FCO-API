@@ -25,7 +25,7 @@ class CalloutController extends Controller {
 
 		try {
 			if (isset($input['q'])) {
-				$callout = $callout->where('title', 'like', '%' . $input['q'] . '%');
+				$callout = $callout->where('description', 'like', '%' . $input['q'] . '%');
 			}
 
 			if (isset($input['page'])) {
@@ -58,7 +58,8 @@ class CalloutController extends Controller {
 				}
 			}
 
-			$result = $callout->get();
+			$callout = $callout->with('user')->with('category');
+			$result  = $callout->get();
 
 			if ( ! $result->count()) {
 				return response()->json(['error' => 'no_result_found']);
@@ -66,6 +67,7 @@ class CalloutController extends Controller {
 
 			return response()->json($result);
 		} catch (\Exception $error) {
+			dd($error);
 			return response()->json(['error' => 'bad_request'], Response::HTTP_BAD_REQUEST);
 		}
 	}
@@ -150,10 +152,7 @@ class CalloutController extends Controller {
 	public function edit($id)
 	{
 		try {
-			$result = Callout::findOrFail($id);
-
-			$result->user;
-			$result->category;
+			$result = Callout::with('user')->with('category')->findOrFail($id);
 
 			return response()->json($result);
 		} catch (\Exception $error) {
