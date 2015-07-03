@@ -4,6 +4,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Upload;
 use App\User;
+use App\Callout;
 use Hash;
 use Input;
 use Illuminate\Http\Request;
@@ -115,6 +116,31 @@ class UserController extends Controller {
 	{
 		try {
 			$result = User::with('role')->with('category')->findOrFail($id);
+
+			return response()->json($result);
+		} catch (\Exception $error) {
+			return response()->json(['error' => 'no_result_found'], Response::HTTP_BAD_REQUEST);
+		}
+	}
+
+	/**
+	 * Show the form for editing the specified resource.
+	 *
+	 * @param  int  $id
+	 * @return Response
+	 */
+	public function callouts($id)
+	{
+		$input = Input::only('limit');
+
+		$callout = new Callout;
+
+		try {
+			if (isset($input['limit'])) {
+				$callout = $callout->take($input['limit']);
+			}
+
+			$result = $callout->where('user_id', $id)->get();
 
 			return response()->json($result);
 		} catch (\Exception $error) {

@@ -26,6 +26,7 @@ Route::group(['prefix' => 'api/v1.0'], function() {
     Route::post('auth/reset', ['as' => 'auth.reset', 'uses' => 'UserController@reset']);
     Route::get('auth/logout', ['as' => 'auth.logout', 'uses' => 'UserController@logout']);
     Route::post('users/photo/{id}', ['as' => 'users.photo', 'uses' => 'UserController@photo']);
+    Route::get('users/{id}/callouts', ['as' => 'users.callouts', 'uses' => 'UserController@callouts']);
 });
 
 Route::group([
