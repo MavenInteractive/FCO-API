@@ -12,6 +12,7 @@ class CategoryController extends Controller {
 	/**
 	 * Display a listing of the resource.
 	 *
+	 * TODO: Make parameter handling reusable to all controllers.
 	 * @return Response
 	 */
 	public function index()

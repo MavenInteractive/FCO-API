@@ -131,13 +131,35 @@ class UserController extends Controller {
 	 */
 	public function callouts($id)
 	{
-		$input = Input::only('limit');
+		$input = Input::only('limit', 'sort');
 
 		$callout = new Callout;
 
 		try {
 			if (isset($input['limit'])) {
 				$callout = $callout->take($input['limit']);
+			}
+
+			if (isset($input['sort'])) {
+				$sort = explode(',', $input['sort']);
+
+				if (is_array($sort) && count($sort) > 0) {
+					foreach ($sort as $key => $value) {
+						$str = trim($value, '+-');
+
+						if (strpos($value, '-') === 0) {
+							$callout = $callout->orderBy(trim($str), 'desc');
+						} else {
+							$callout = $callout->orderBy(trim($str), 'asc');
+						}
+					}
+				} else {
+					if (strpos($sort, '-') === 0) {
+						$callout = $callout->orderBy(trim($sort, '-'), 'desc');
+					} else {
+						$callout = $callout->orderBy(trim($sort, '+'), 'asc');
+					}
+				}
 			}
 
 			$result = $callout->where('user_id', $id)->get();
