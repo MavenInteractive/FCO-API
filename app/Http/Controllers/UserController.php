@@ -162,7 +162,7 @@ class UserController extends Controller {
 				}
 			}
 
-			$result = $callout->where('user_id', $id)->get();
+			$result = $callout->with('category')->where('user_id', $id)->get();
 
 			return response()->json($result);
 		} catch (\Exception $error) {
