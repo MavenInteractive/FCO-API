@@ -50,4 +50,8 @@ Route::group([
             'only' => ['index'],
             'names'  => ['index' => 'roles.index']
         ]);
+        Route::resource('uploads', 'UploadController', [
+            'only' => ['show'],
+            'names'  => ['index' => 'roles.show']
+        ]);
 });
