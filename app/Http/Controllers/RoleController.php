@@ -22,7 +22,13 @@ class RoleController extends Controller {
 
 		try {
 			if (isset($input['q'])) {
-				$role = $role->where('title', 'like', '%' . $input['q'] . '%');
+				$q = json_decode($input['q']);
+
+				if (count($q)) {
+					foreach ($q as $key => $value) {
+						$role = ($key == 0) ? $role->where($key, $value) : $role->orWhere($key, $value);
+					}
+				}
 			}
 
 			if (isset($input['page'])) {

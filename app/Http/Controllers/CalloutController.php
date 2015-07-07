@@ -25,7 +25,13 @@ class CalloutController extends Controller {
 
 		try {
 			if (isset($input['q'])) {
-				$callout = $callout->where('description', 'like', '%' . $input['q'] . '%');
+				$q = json_decode($input['q']);
+
+				if (count($q)) {
+					foreach ($q as $key => $value) {
+						$callout = ($key == 0) ? $callout->where($key, $value) : $callout->orWhere($key, $value);
+					}
+				}
 			}
 
 			if (isset($input['page'])) {
@@ -67,6 +73,7 @@ class CalloutController extends Controller {
 
 			return response()->json($result);
 		} catch (\Exception $error) {
+			dd($error);
 			return response()->json(['error' => 'bad_request'], Response::HTTP_BAD_REQUEST);
 		}
 	}

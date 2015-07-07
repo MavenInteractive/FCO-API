@@ -29,7 +29,13 @@ class UserController extends Controller {
 
 		try {
 			if (isset($input['q'])) {
-				//$user = $user->where('description', 'like', '%' . $input['q'] . '%');
+				$q = json_decode($input['q']);
+
+				if (count($q)) {
+					foreach ($q as $key => $value) {
+						$user = ($key == 0) ? $user->where($key, $value) : $user->orWhere($key, $value);
+					}
+				}
 			}
 
 			if (isset($input['page'])) {
@@ -131,11 +137,25 @@ class UserController extends Controller {
 	 */
 	public function callouts($id)
 	{
-		$input = Input::only('limit', 'sort');
+		$input = Input::only('q', 'page', 'limit', 'sort');
 
 		$callout = new Callout;
 
 		try {
+			if (isset($input['q'])) {
+				$q = json_decode($input['q']);
+
+				if (count($q)) {
+					foreach ($q as $key => $value) {
+						$callout = ($key == 0) ? $callout->where($key, $value) : $callout->orWhere($key, $value);
+					}
+				}
+			}
+
+			if (isset($input['page'])) {
+				$callout = $callout->skip($input['page']);
+			}
+
 			if (isset($input['limit'])) {
 				$callout = $callout->take($input['limit']);
 			}

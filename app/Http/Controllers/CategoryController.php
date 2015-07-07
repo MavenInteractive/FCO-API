@@ -23,7 +23,13 @@ class CategoryController extends Controller {
 
 		try {
 			if (isset($input['q'])) {
-				$category = $category->where('description', 'like', '%' . $input['q'] . '%');
+				$q = json_decode($input['q']);
+
+				if (count($q)) {
+					foreach ($q as $key => $value) {
+						$category = ($key == 0) ? $category->where($key, $value) : $category->orWhere($key, $value);
+					}
+				}
 			}
 
 			if (isset($input['page'])) {
