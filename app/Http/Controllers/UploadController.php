@@ -55,7 +55,6 @@ class UploadController extends Controller {
 
 			return (new Response($file, 200))->header('Content-Type', $result->format);
 		} catch (\Exception $error) {
-			dd($error);
 			return response()->json(['error' => 'bad_request'], Response::HTTP_BAD_REQUEST);
 		}
 	}

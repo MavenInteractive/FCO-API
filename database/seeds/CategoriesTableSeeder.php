@@ -21,8 +21,6 @@ class CategoriesTableSeeder extends Seeder {
 			['description' => 'Judo', 'status' => 'A'],
 			['description' => 'Jujutsu', 'status' => 'A'],
 			['description' => 'MMA', 'status' => 'A'],
-			['description' => 'Open Callout', 'status' => 'A'],
-			['description' => 'Sparring', 'status' => 'A'],
 			['description' => 'Taekwondo', 'status' => 'A'],
 			['description' => 'Team Warfare', 'status' => 'A'],
 			['description' => 'UFC', 'status' => 'A'],
