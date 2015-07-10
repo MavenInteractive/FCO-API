@@ -25,8 +25,6 @@ Route::group(['prefix' => 'api/v1.0'], function() {
     Route::post('auth/login', ['as' => 'auth.login', 'uses' => 'UserController@login']);
     Route::post('auth/reset', ['as' => 'auth.reset', 'uses' => 'UserController@reset']);
     Route::get('auth/logout', ['as' => 'auth.logout', 'uses' => 'UserController@logout']);
-    Route::post('users/photo/{id}', ['as' => 'users.photo', 'uses' => 'UserController@photo']);
-    Route::get('users/{id}/callouts', ['as' => 'users.callouts', 'uses' => 'UserController@callouts']);
 });
 
 Route::group([
@@ -34,6 +32,10 @@ Route::group([
     'middleware' => [
         'before' => 'jwt.auth'
     ]], function() {
+        Route::post('callouts/upload', ['as' => 'callouts.upload', 'uses' => 'CalloutController@upload']);
+        Route::post('users/{users}/upload', ['as' => 'users.upload', 'uses' => 'UserController@upload']);
+        Route::get('users/{users}/callouts', ['as' => 'users.callouts', 'uses' => 'UserController@callouts']);
+
         Route::resource('users', 'UserController', [
             'except' => ['create', 'store', 'show'],
             'names'  => ['index' => 'users.index', 'edit' => 'users.edit', 'update' => 'users.update', 'destroy' => 'users.destroy']
@@ -52,6 +54,6 @@ Route::group([
         ]);
         Route::resource('uploads', 'UploadController', [
             'only' => ['show'],
-            'names'  => ['index' => 'roles.show']
+            'names'  => ['show' => 'uploads.show']
         ]);
 });

@@ -311,7 +311,7 @@ class UserController extends Controller {
 	 * @param  none
 	 * @return Response
 	 */
-	public function photo(Request $request, $id)
+	public function upload(Request $request, $id)
 	{
 		try {
 			$file = $request->file('photo');

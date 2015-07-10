@@ -73,7 +73,6 @@ class CalloutController extends Controller {
 
 			return response()->json($result);
 		} catch (\Exception $error) {
-			dd($error);
 			return response()->json(['error' => 'bad_request'], Response::HTTP_BAD_REQUEST);
 		}
 	}
@@ -98,6 +97,7 @@ class CalloutController extends Controller {
 		$input = Input::only('user_id', 'category_id', 'title', 'description', 'fighter_a', 'fighter_b', 'photo', 'video', 'match_type', 'details_date', 'details_time', 'details_venue');
 
 		try {
+			/*
 			foreach (['photo', 'video'] as $value) {
 				$file = $request->file($value);
 
@@ -124,6 +124,7 @@ class CalloutController extends Controller {
 
 				$input[$value] = $upload->id;
 			}
+			*/
 
 			$input['total_comments'] = 0;
 			$input['total_views']    = 0;
@@ -211,6 +212,51 @@ class CalloutController extends Controller {
 
 			return response()->json(['success' => 'success_message']);
 		} catch (\Exception $error) {
+			return response()->json(['error' => 'bad_request'], Response::HTTP_BAD_REQUEST);
+		}
+	}
+
+	/**
+	 * Uploads image and video.
+	 *
+	 * @param  int  $id
+	 * @return Response
+	 */
+	public function upload(Request $request)
+	{
+		$input = Input::only('photo', 'video');
+
+		try {
+			foreach (['photo', 'video'] as $value) {
+				$file = $request->file($value);
+
+				if ( ! $file) {
+					continue;
+				}
+
+				$fileName = $file->getFilename();
+				$ext      = $file->getClientOriginalExtension();
+				$mime     = $file->getClientMimeType();
+
+				Storage::disk('local')->put($fileName . '.' . $ext, File::get($file));
+
+				$upload = [
+					'type'          => 'callout',
+					'format'        => $mime,
+					'is_primary'    => true,
+					'file_url'      => $fileName . '.' . $ext,
+					'thumbnail_url' => $fileName . '.' . $ext,
+					'status'        => 'A'
+				];
+
+				$upload = Upload::create($upload);
+
+				break;
+			}
+
+			return response()->json(['upload' => $upload, 'success' => 'success_message']);
+		} catch (\Exception $error) {
+			dd($error);
 			return response()->json(['error' => 'bad_request'], Response::HTTP_BAD_REQUEST);
 		}
 	}
