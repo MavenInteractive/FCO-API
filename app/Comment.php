@@ -26,11 +26,21 @@ class Comment extends Model {
     protected $hidden = [];
 
     /**
+     * The users relationship.
+     *
+     * @return object
+     */
+    public function user()
+    {
+        return $this->belongsTo('App\User');
+    }
+
+    /**
      * The callouts relationship.
      *
      * @return object
      */
-    public function callouts()
+    public function callout()
     {
         return $this->belongsTo('App\Callout');
     }

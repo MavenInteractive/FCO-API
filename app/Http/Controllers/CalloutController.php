@@ -4,6 +4,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Upload;
 use App\Callout;
+use App\View;
 use Input;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -97,35 +98,6 @@ class CalloutController extends Controller {
 		$input = Input::only('user_id', 'category_id', 'title', 'description', 'fighter_a', 'fighter_b', 'photo', 'video', 'match_type', 'details_date', 'details_time', 'details_venue');
 
 		try {
-			/*
-			foreach (['photo', 'video'] as $value) {
-				$file = $request->file($value);
-
-				if ( ! $file) {
-					continue;
-				}
-
-				$fileName = $file->getFilename();
-				$ext      = $file->getClientOriginalExtension();
-				$mime     = $file->getClientMimeType();
-
-				Storage::disk('local')->put($fileName . '.' . $ext, File::get($file));
-
-				$upload = [
-					'type'          => 'callout',
-					'format'        => $mime,
-					'is_primary'    => true,
-					'file_url'      => $fileName . '.' . $ext,
-					'thumbnail_url' => $fileName . '.' . $ext,
-					'status'        => 'A'
-				];
-
-				$upload = Upload::create($upload);
-
-				$input[$value] = $upload->id;
-			}
-			*/
-
 			$input['total_comments'] = 0;
 			$input['total_views']    = 0;
 			$input['total_votes']    = 0;
@@ -147,7 +119,23 @@ class CalloutController extends Controller {
 	 */
 	public function show($id)
 	{
-		//
+		try {
+			$result = Callout::with('user')->with('category')->with('comment')->findOrFail($id);
+
+			$result->total_views += 1;
+			$result->save();
+
+			View::create([
+				'user_id'    => $result->user_id,
+				'callout_id' => $result->id,
+				'count'      => 1,
+				'status'     => 'A'
+			]);
+
+			return response()->json($result);
+		} catch (\Exception $error) {
+			return response()->json(['error' => 'bad_request'], Response::HTTP_BAD_REQUEST);
+		}
 	}
 
 	/**
@@ -178,21 +166,21 @@ class CalloutController extends Controller {
 		try {
 			$result = Callout::findOrFail($id);
 
-			$result->user_id       = $request->input('user_id');
-			$result->category_id   = $request->input('category_id');
-			$result->title         = $request->input('title');
-			$result->description   = $request->input('description');
-			$result->fighter_a     = $request->input('fighter_a');
-			$result->fighter_b     = $request->input('fighter_b');
-			$result->match_type    = $request->input('match_type');
-			$result->details_date  = $request->input('details_date');
-			$result->details_time  = $request->input('details_time');
-			$result->details_venue = $request->input('details_venue');
+			$data = array();
+
+			foreach (array('user_id', 'category_id', 'title', 'description', 'fighter_a', 'fighter_b', 'photo', 'video', 'match_type', 'details_date', 'details_time', 'details_venue') as $value) {
+				if ($request->has($value)) {
+					$data[$value] = $request->input($value);
+				}
+			}
+
+			$result->fill($data);
 
 			$result->save();
 
 			return response()->json(['success' => 'success_message']);
 		} catch (\Exception $error) {
+			dd($error);
 			return response()->json(['error' => 'failed_to_update'], Response::HTTP_INTERNAL_SERVER_ERROR);
 		}
 	}

@@ -25,6 +25,8 @@ Route::group(['prefix' => 'api/v1.0'], function() {
     Route::post('auth/login', ['as' => 'auth.login', 'uses' => 'UserController@login']);
     Route::post('auth/reset', ['as' => 'auth.reset', 'uses' => 'UserController@reset']);
     Route::get('auth/logout', ['as' => 'auth.logout', 'uses' => 'UserController@logout']);
+    Route::get('callouts', ['as' => 'callouts.index', 'uses' => 'CalloutController@index']);
+    Route::get('categories', ['as' => 'categories.index', 'uses' => 'CategoryController@index']);
 });
 
 Route::group([
@@ -37,23 +39,23 @@ Route::group([
         Route::get('users/{users}/callouts', ['as' => 'users.callouts', 'uses' => 'UserController@callouts']);
 
         Route::resource('users', 'UserController', [
-            'except' => ['create', 'store', 'show'],
-            'names'  => ['index' => 'users.index', 'edit' => 'users.edit', 'update' => 'users.update', 'destroy' => 'users.destroy']
-        ]);
-        Route::resource('categories', 'CategoryController', [
-            'except' => ['create', 'show'],
-            'names'  => ['index' => 'categories.index', 'store' => 'categories.store', 'edit' => 'categories.edit', 'update' => 'categories.update', 'destroy' => 'categories.destroy']
+            'except' => ['create', 'store'],
+            'names'  => ['index' => 'users.index', 'show' => 'users.show', 'edit' => 'users.edit', 'update' => 'users.update', 'destroy' => 'users.destroy']
         ]);
         Route::resource('callouts', 'CalloutController', [
-            'except' => ['create', 'show'],
-            'names'  => ['index' => 'callouts.index', 'store' => 'callouts.store', 'edit' => 'callouts.edit', 'update' => 'callouts.update', 'destroy' => 'callouts.destroy']
+            'except' => ['create', 'index'],
+            'names'  => ['show' => 'callouts.show', 'store' => 'callouts.store', 'edit' => 'callouts.edit', 'update' => 'callouts.update', 'destroy' => 'callouts.destroy']
+        ]);
+        Route::resource('comments', 'CommentController', [
+            'except' => ['create'],
+            'names'  => ['index' => 'comments.index', 'show' => 'comments.show', 'store' => 'comments.store', 'edit' => 'comments.edit', 'update' => 'comments.update', 'destroy' => 'comments.destroy']
         ]);
         Route::resource('roles', 'RoleController', [
-            'only' => ['index'],
-            'names'  => ['index' => 'roles.index']
+            'only'  => ['index'],
+            'names' => ['index' => 'roles.index']
         ]);
         Route::resource('uploads', 'UploadController', [
-            'only' => ['show'],
-            'names'  => ['show' => 'uploads.show']
+            'only'  => ['show'],
+            'names' => ['show' => 'uploads.show']
         ]);
 });

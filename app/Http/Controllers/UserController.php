@@ -201,13 +201,15 @@ class UserController extends Controller {
 		try {
 			$result = User::findOrFail($id);
 
-			$result->first_name  = $request->input('first_name');
-			$result->last_name   = $request->input('last_name');
-			$result->email       = $request->input('email');
-			$result->role_id     = $request->input('role_id');
-			$result->category_id = $request->input('category_id');
-			$result->birth_date  = $request->input('birth_date');
-			$result->gender      = $request->input('gender');
+			$data = array();
+
+			foreach (array('first_name', 'last_name', 'email', 'role_id', 'category_id', 'birth_date', 'gender') as $value) {
+				if ($request->has($value)) {
+					$data[$value] = $request->input($value);
+				}
+			}
+
+			$result->fill($data);
 
 			$result->save();
 

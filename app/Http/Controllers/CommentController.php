@@ -2,24 +2,23 @@
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Category;
+use App\Comment;
 use Input;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
-class CategoryController extends Controller {
+class CommentController extends Controller {
 
 	/**
 	 * Display a listing of the resource.
 	 *
-	 * TODO: Make parameter handling reusable to all controllers.
 	 * @return Response
 	 */
 	public function index()
 	{
 		$input = Input::only('q', 'page', 'limit', 'sort');
 
-		$category = new Category;
+		$comment = new Comment;
 
 		try {
 			if (isset($input['q'])) {
@@ -27,17 +26,17 @@ class CategoryController extends Controller {
 
 				if (count($q)) {
 					foreach ($q as $key => $value) {
-						$category = ($key == 0) ? $category->where($key, $value) : $category->orWhere($key, $value);
+						$comment = ($key == 0) ? $comment->where($key, $value) : $comment->orWhere($key, $value);
 					}
 				}
 			}
 
 			if (isset($input['page'])) {
-				$category = $category->skip($input['page']);
+				$comment = $comment->skip($input['page']);
 			}
 
 			if (isset($input['limit'])) {
-				$category = $category->take($input['limit']);
+				$comment = $comment->take($input['limit']);
 			}
 
 			if (isset($input['sort'])) {
@@ -48,21 +47,22 @@ class CategoryController extends Controller {
 						$str = trim($value, '+-');
 
 						if (strpos($value, '-') === 0) {
-							$category = $category->orderBy(trim($str), 'desc');
+							$comment = $comment->orderBy(trim($str), 'desc');
 						} else {
-							$category = $category->orderBy(trim($str), 'asc');
+							$comment = $comment->orderBy(trim($str), 'asc');
 						}
 					}
 				} else {
 					if (strpos($sort, '-') === 0) {
-						$category = $category->orderBy(trim($sort, '-'), 'desc');
+						$comment = $comment->orderBy(trim($sort, '-'), 'desc');
 					} else {
-						$category = $category->orderBy(trim($sort, '+'), 'asc');
+						$comment = $comment->orderBy(trim($sort, '+'), 'asc');
 					}
 				}
 			}
 
-			$result = $category->get();
+			$comment = $comment->with('user')->with('callout');
+			$result  = $comment->get();
 
 			if ( ! $result->count()) {
 				return response()->json(['error' => 'no_result_found']);
@@ -91,12 +91,10 @@ class CategoryController extends Controller {
 	 */
 	public function store()
 	{
-		$input = Input::only('description');
+		$input = Input::only('user_id', 'category_id', 'details', 'status');
 
 		try {
-			$input['status'] = 'A';
-
-			$category = Category::create($input);
+			$comment = Comment::create($input);
 
 			return response()->json(['success' => 'success_message']);
 		} catch (\Exception $error) {
@@ -113,11 +111,12 @@ class CategoryController extends Controller {
 	public function show($id)
 	{
 		try {
-			$result = Category::findOrFail($id);
+			$result = Comment::with('user')->with('callout')->findOrFail($id);
 
 			return response()->json($result);
 		} catch (\Exception $error) {
-			return response()->json(['error' => 'no_result_found'], Response::HTTP_BAD_REQUEST);
+			dd($error);
+			return response()->json(['error' => 'bad_request'], Response::HTTP_BAD_REQUEST);
 		}
 	}
 
@@ -130,11 +129,11 @@ class CategoryController extends Controller {
 	public function edit($id)
 	{
 		try {
-			$result = Category::findOrFail($id);
+			$result = Comment::with('user')->with('callout')->findOrFail($id);
 
 			return response()->json($result);
 		} catch (\Exception $error) {
-			return response()->json(['error' => 'no_result_found'], Response::HTTP_BAD_REQUEST);
+			return response()->json(['error' => 'bad_request'], Response::HTTP_BAD_REQUEST);
 		}
 	}
 
@@ -147,9 +146,9 @@ class CategoryController extends Controller {
 	public function update(Request $request, $id)
 	{
 		try {
-			$result = Category::findOrFail($id);
+			$result = Comment::findOrFail($id);
 
-			$result->description = $request->input('description');
+			$result->details = $request->input('details');
 
 			$result->save();
 
@@ -168,7 +167,7 @@ class CategoryController extends Controller {
 	public function destroy($id)
 	{
 		try {
-			$result = Category::findOrFail($id);
+			$result = Comment::findOrFail($id);
 
 			$result->destroy();
 

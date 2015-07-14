@@ -43,7 +43,7 @@ class Callout extends Model {
      *
      * @return object
      */
-    public function comments()
+    public function comment()
     {
         return $this->hasMany('App\Comment');
     }
@@ -53,7 +53,7 @@ class Callout extends Model {
      *
      * @return object
      */
-    public function views()
+    public function view()
     {
         return $this->hasMany('App\View');
     }
@@ -63,7 +63,7 @@ class Callout extends Model {
      *
      * @return object
      */
-    public function votes()
+    public function vote()
     {
         return $this->hasMany('App\Vote');
     }
