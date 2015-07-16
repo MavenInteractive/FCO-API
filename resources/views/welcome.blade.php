@@ -40,7 +40,7 @@
 	<body>
 		<div class="container">
 			<div class="content">
-				<div class="title">Fight Call Out Training Example</div>
+				<div class="title">Fight Call Out</div>
 				<div class="quote">{{ Inspiring::quote() }}</div>
 			</div>
 		</div>
