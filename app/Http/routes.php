@@ -27,6 +27,11 @@ Route::group(['prefix' => 'api/v1.0'], function() {
     Route::get('auth/logout', ['as' => 'auth.logout', 'uses' => 'UserController@logout']);
     Route::get('callouts', ['as' => 'callouts.index', 'uses' => 'CalloutController@index']);
     Route::get('categories', ['as' => 'categories.index', 'uses' => 'CategoryController@index']);
+
+    Route::resource('uploads', 'UploadController', [
+        'only'  => ['show'],
+        'names' => ['show' => 'uploads.show']
+    ]);
 });
 
 Route::group([
@@ -53,9 +58,5 @@ Route::group([
         Route::resource('roles', 'RoleController', [
             'only'  => ['index'],
             'names' => ['index' => 'roles.index']
-        ]);
-        Route::resource('uploads', 'UploadController', [
-            'only'  => ['show'],
-            'names' => ['show' => 'uploads.show']
         ]);
 });
