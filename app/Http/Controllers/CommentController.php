@@ -91,7 +91,7 @@ class CommentController extends Controller {
 	 */
 	public function store()
 	{
-		$input = Input::only('user_id', 'category_id', 'details', 'status');
+		$input = Input::only('user_id', 'callout_id', 'details', 'status');
 
 		try {
 			$comment = Comment::create($input);
@@ -115,7 +115,6 @@ class CommentController extends Controller {
 
 			return response()->json($result);
 		} catch (\Exception $error) {
-			dd($error);
 			return response()->json(['error' => 'bad_request'], Response::HTTP_BAD_REQUEST);
 		}
 	}
