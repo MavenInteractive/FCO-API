@@ -228,9 +228,7 @@ class UserController extends Controller {
 	public function destroy($id)
 	{
 		try {
-			$result = User::findOrFail($id);
-
-			$result->destroy();
+			User::destroy($id);
 
 			return response()->json(['success' => 'success_message']);
 		} catch (\Exception $error) {

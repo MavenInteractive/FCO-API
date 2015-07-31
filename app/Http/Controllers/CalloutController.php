@@ -180,7 +180,6 @@ class CalloutController extends Controller {
 
 			return response()->json(['success' => 'success_message']);
 		} catch (\Exception $error) {
-			dd($error);
 			return response()->json(['error' => 'failed_to_update'], Response::HTTP_INTERNAL_SERVER_ERROR);
 		}
 	}
@@ -194,9 +193,7 @@ class CalloutController extends Controller {
 	public function destroy($id)
 	{
 		try {
-			$result = Callout::findOrFail($id);
-
-			$result->destroy();
+			Callout::destroy($id);
 
 			return response()->json(['success' => 'success_message']);
 		} catch (\Exception $error) {
@@ -244,7 +241,6 @@ class CalloutController extends Controller {
 
 			return response()->json(['upload' => $upload, 'success' => 'success_message']);
 		} catch (\Exception $error) {
-			dd($error);
 			return response()->json(['error' => 'bad_request'], Response::HTTP_BAD_REQUEST);
 		}
 	}

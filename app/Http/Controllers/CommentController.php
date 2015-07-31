@@ -166,9 +166,7 @@ class CommentController extends Controller {
 	public function destroy($id)
 	{
 		try {
-			$result = Comment::findOrFail($id);
-
-			$result->destroy();
+			Comment::destroy($id);
 
 			return response()->json(['success' => 'success_message']);
 		} catch (\Exception $error) {

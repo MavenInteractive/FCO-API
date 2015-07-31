@@ -168,9 +168,7 @@ class CategoryController extends Controller {
 	public function destroy($id)
 	{
 		try {
-			$result = Category::findOrFail($id);
-
-			$result->destroy();
+			Category::destroy($id);
 
 			return response()->json(['success' => 'success_message']);
 		} catch (\Exception $error) {
