@@ -28,7 +28,7 @@ class CategoryController extends Controller {
 				if (count($q)) {
 					foreach ($q as $key => $value) {
 						$field = explode(':', $value);
-						$category = ($key == 0) ? $category->where($field['0'], $field['1']) : $category->orWhere($field['0'], $field['1']);
+						$category = $category->where($field['0'], $field['1']);
 					}
 				}
 			}

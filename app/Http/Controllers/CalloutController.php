@@ -31,7 +31,7 @@ class CalloutController extends Controller {
 				if (count($q)) {
 					foreach ($q as $key => $value) {
 						$field = explode(':', $value);
-						$callout = ($key == 0) ? $callout->where($field['0'], $field['1']) : $callout->orWhere($field['0'], $field['1']);
+						$callout = $callout->where($field['0'], $field['1']);
 					}
 				}
 			}

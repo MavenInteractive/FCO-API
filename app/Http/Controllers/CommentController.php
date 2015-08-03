@@ -27,7 +27,7 @@ class CommentController extends Controller {
 				if (count($q)) {
 					foreach ($q as $key => $value) {
 						$field = explode(':', $value);
-						$comment = ($key == 0) ? $comment->where($field['0'], $field['1']) : $comment->orWhere($field['0'], $field['1']);
+						$comment = $comment->where($field['0'], $field['1']);
 					}
 				}
 			}

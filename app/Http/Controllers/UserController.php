@@ -34,7 +34,7 @@ class UserController extends Controller {
 				if (count($q)) {
 					foreach ($q as $key => $value) {
 						$field = explode(':', $value);
-						$user = ($key == 0) ? $user->where($field['0'], $field['1']) : $user->orWhere($field['0'], $field['1']);
+						$user = $user->where($field['0'], $field['1']);
 					}
 				}
 			}

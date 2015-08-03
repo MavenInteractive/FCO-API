@@ -27,7 +27,7 @@ class RoleController extends Controller {
 				if (count($q)) {
 					foreach ($q as $key => $value) {
 						$field = explode(':', $value);
-						$role = ($key == 0) ? $role->where($field['0'], $field['1']) : $role->orWhere($field['0'], $field['1']);
+						$role = $role->where($field['0'], $field['1']);
 					}
 				}
 			}
