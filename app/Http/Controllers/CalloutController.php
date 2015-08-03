@@ -26,11 +26,12 @@ class CalloutController extends Controller {
 
 		try {
 			if (isset($input['q'])) {
-				$q = json_decode($input['q']);
+				$q = explode(',', $input['q']);
 
 				if (count($q)) {
 					foreach ($q as $key => $value) {
-						$callout = ($key == 0) ? $callout->where($key, $value) : $callout->orWhere($key, $value);
+						$field = explode(':', $value);
+						$callout = ($key == 0) ? $callout->where($field['0'], $field['1']) : $callout->orWhere($field['0'], $field['1']);
 					}
 				}
 			}

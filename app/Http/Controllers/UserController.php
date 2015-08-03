@@ -29,11 +29,12 @@ class UserController extends Controller {
 
 		try {
 			if (isset($input['q'])) {
-				$q = json_decode($input['q']);
+				$q = explode(',', $input['q']);
 
 				if (count($q)) {
 					foreach ($q as $key => $value) {
-						$user = ($key == 0) ? $user->where($key, $value) : $user->orWhere($key, $value);
+						$field = explode(':', $value);
+						$user = ($key == 0) ? $user->where($field['0'], $field['1']) : $user->orWhere($field['0'], $field['1']);
 					}
 				}
 			}

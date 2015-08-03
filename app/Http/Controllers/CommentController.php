@@ -22,11 +22,12 @@ class CommentController extends Controller {
 
 		try {
 			if (isset($input['q'])) {
-				$q = json_decode($input['q']);
+				$q = explode(',', $input['q']);
 
 				if (count($q)) {
 					foreach ($q as $key => $value) {
-						$comment = ($key == 0) ? $comment->where($key, $value) : $comment->orWhere($key, $value);
+						$field = explode(':', $value);
+						$comment = ($key == 0) ? $comment->where($field['0'], $field['1']) : $comment->orWhere($field['0'], $field['1']);
 					}
 				}
 			}

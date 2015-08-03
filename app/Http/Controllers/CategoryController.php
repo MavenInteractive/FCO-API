@@ -23,11 +23,12 @@ class CategoryController extends Controller {
 
 		try {
 			if (isset($input['q'])) {
-				$q = json_decode($input['q']);
+				$q = explode(',', $input['q']);
 
 				if (count($q)) {
 					foreach ($q as $key => $value) {
-						$category = ($key == 0) ? $category->where($key, $value) : $category->orWhere($key, $value);
+						$field = explode(':', $value);
+						$category = ($key == 0) ? $category->where($field['0'], $field['1']) : $category->orWhere($field['0'], $field['1']);
 					}
 				}
 			}
