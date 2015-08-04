@@ -60,4 +60,8 @@ Route::group([
             'only'  => ['index'],
             'names' => ['index' => 'roles.index']
         ]);
+        Route::resource('votes', 'VoteController', [
+            'only'  => ['store'],
+            'names' => ['store' => 'votes.store']
+        ]);
 });
