@@ -51,9 +51,25 @@ class UploadController extends Controller {
 		try {
 			$result = Upload::findOrFail($id);
 
-			$file = Storage::disk('local')->get($result->file_url);
+			if (in_array($result->format, array('image/jpg', 'image/jpeg'))) {
+				$file = Storage::disk('local')->get($result->file_url);
 
-			return (new Response($file, 200))->header('Content-Type', $result->format);
+				return (new Response($file, 200))->header('Content-Type', $result->format);
+			} else {
+				$fs = Storage::disk('local')->getDriver();
+
+				$stream = $fs->readStream($result->file_url);
+
+				$headers = [
+					"Content-Type"        => $fs->getMimetype($result->file_url),
+					"Content-Length"      => $fs->getSize($result->file_url),
+					"Content-disposition" => "attachment; filename=\"" . basename($result->file_url) . "\"",
+				];
+
+				return response()->stream(function() use ($stream) {
+					fpassthru($stream);
+				}, 200, $headers);
+			}
 		} catch (\Exception $error) {
 			return response()->json(['error' => 'bad_request'], Response::HTTP_BAD_REQUEST);
 		}
