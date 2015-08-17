@@ -3,6 +3,7 @@
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Upload;
+use App\VideoStream;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\File;
@@ -56,19 +57,22 @@ class UploadController extends Controller {
 
 				return (new Response($file, 200))->header('Content-Type', $result->format);
 			} else {
-				$fs = Storage::disk('local')->getDriver();
+				// $fs = Storage::disk('local')->getDriver();
+				//
+				// $stream = $fs->readStream($result->file_url);
+				//
+				// $headers = [
+				// 	"Content-Type"        => $fs->getMimetype($result->file_url),
+				// 	"Content-Length"      => $fs->getSize($result->file_url),
+				// 	"Content-disposition" => "attachment; filename=\"" . basename($result->file_url) . "\"",
+				// ];
+				//
+				// return response()->stream(function() use ($stream) {
+				// 	fpassthru($stream);
+				// }, 200, $headers);
 
-				$stream = $fs->readStream($result->file_url);
-
-				$headers = [
-					"Content-Type"        => $fs->getMimetype($result->file_url),
-					"Content-Length"      => $fs->getSize($result->file_url),
-					"Content-disposition" => "attachment; filename=\"" . basename($result->file_url) . "\"",
-				];
-
-				return response()->stream(function() use ($stream) {
-					fpassthru($stream);
-				}, 200, $headers);
+				$stream = new VideoStream(config('filesystems.disks.local.root').'/'.$result->file_url);
+				$stream->start();
 			}
 		} catch (\Exception $error) {
 			return response()->json(['error' => 'bad_request'], Response::HTTP_BAD_REQUEST);
