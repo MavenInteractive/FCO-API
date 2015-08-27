@@ -28,6 +28,7 @@ Route::group(['prefix' => 'api/v1.0'], function() {
     Route::get('callouts', ['as' => 'callouts.index', 'uses' => 'CalloutController@index']);
     Route::get('categories', ['as' => 'categories.index', 'uses' => 'CategoryController@index']);
     Route::get('comments', ['as' => 'comments.index', 'uses' => 'CommentController@index']);
+    Route::get('countries', ['as' => 'countries.index', 'uses' => 'CountriesController@index']);
 
     Route::resource('uploads', 'UploadController', [
         'only'  => ['show'],

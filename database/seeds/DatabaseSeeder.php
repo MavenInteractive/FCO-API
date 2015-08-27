@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder {
 		$this->call('ViewsTableSeeder');
 		$this->call('VotesTableSeeder');
 		$this->call('UploadsTableSeeder');
+		$this->call('CountriesTableSeeder');
 	}
 
 }
