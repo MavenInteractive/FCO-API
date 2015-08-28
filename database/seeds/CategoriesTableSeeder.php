@@ -23,7 +23,7 @@ class CategoriesTableSeeder extends Seeder {
 			['description' => 'MMA', 'status' => 'A'],
 			['description' => 'Taekwondo', 'status' => 'A'],
 			['description' => 'Team Warfare', 'status' => 'A'],
-			['description' => 'UFC', 'status' => 'A'],
+			['description' => 'Street', 'status' => 'A'],
 			['description' => 'Wrestling', 'status' => 'A']
 		]);
 	}
