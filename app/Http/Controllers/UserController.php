@@ -292,7 +292,10 @@ class UserController extends Controller {
 			return response()->json(['error' => 'invalid_credentials'], Response::HTTP_NOT_FOUND);
 		}
 
-		return response()->json(['user' => JWTAuth::toUser($token), 'token' => $token]);
+		$user = JWTAuth::toUser($token);
+		$user = $user->with('role')->with('category')->with('country')->where('id', $user->id)->get();
+
+		return response()->json(['user' => $user['0'], 'token' => $token]);
 	}
 
 	/**
