@@ -52,6 +52,16 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     }
 
     /**
+     * The countries relationship.
+     *
+     * @return object
+     */
+    public function country()
+    {
+        return $this->belongsTo('App\Countries');
+    }
+
+    /**
      * The callouts relationship.
      *
      * @return object

@@ -69,7 +69,7 @@ class UserController extends Controller {
 				}
 			}
 
-			$user   = $user->with('role')->with('category');
+			$user   = $user->with('role')->with('category')->with('country');
 			$result = $user->get();
 
 			if ( ! $result->count()) {
@@ -78,6 +78,7 @@ class UserController extends Controller {
 
 			return response()->json($result);
 		} catch (\Exception $error) {
+			dd($error);
 			return response()->json(['error' => 'bad_request'], Response::HTTP_BAD_REQUEST);
 		}
 	}
@@ -122,7 +123,7 @@ class UserController extends Controller {
 	public function edit($id)
 	{
 		try {
-			$result = User::with('role')->with('category')->findOrFail($id);
+			$result = User::with('role')->with('category')->with('country')->findOrFail($id);
 
 			return response()->json($result);
 		} catch (\Exception $error) {
@@ -204,7 +205,7 @@ class UserController extends Controller {
 
 			$data = array();
 
-			foreach (array('first_name', 'last_name', 'email', 'role_id', 'category_id', 'birth_date', 'gender') as $value) {
+			foreach (array('first_name', 'last_name', 'email', 'role_id', 'category_id', 'country_id', 'birth_date', 'gender') as $value) {
 				if ($request->has($value)) {
 					$data[$value] = $request->input($value);
 				}

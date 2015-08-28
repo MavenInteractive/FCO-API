@@ -25,4 +25,14 @@ class Countries extends Model {
      */
     protected $hidden = [];
 
+	/**
+     * The users relationship.
+     *
+     * @return object
+     */
+    public function user()
+    {
+        return $this->hasMany('App\User');
+    }
+
 }
