@@ -78,7 +78,6 @@ class UserController extends Controller {
 
 			return response()->json($result);
 		} catch (\Exception $error) {
-			dd($error);
 			return response()->json(['error' => 'bad_request'], Response::HTTP_BAD_REQUEST);
 		}
 	}
