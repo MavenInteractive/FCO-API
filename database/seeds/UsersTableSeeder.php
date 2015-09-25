@@ -37,10 +37,10 @@ class UsersTableSeeder extends Seeder {
 				'last_name'   => $faker->lastName,
 				'username'    => $faker->userName,
 				'email'       => $faker->safeEmail,
-				'password'    => bcrypt('pass1234'),
+				'password'    => bcrypt('keanfake'),
 				'photo'       => rand(1, 50),
 				'role_id'     => rand(1, 6),
-				'category_id' => rand(1, 13),
+				'category_id' => rand(1, 11),
 				'birth_date'  => $faker->dateTimeBetween('-50 years'),
 				'gender'      => 'male',
 				'status'      => 'A'
