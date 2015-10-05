@@ -96,7 +96,7 @@ class CalloutController extends Controller {
 	 */
 	public function store(Request $request)
 	{
-		$input = Input::only('user_id', 'category_id', 'title', 'description', 'fighter_a', 'fighter_b', 'photo', 'video', 'match_type', 'details_date', 'details_time', 'details_venue', 'latitude', 'longitude');
+		$input = Input::only('user_id', 'category_id', 'title', 'description', 'fighter_a', 'fighter_b', 'photo', 'video', 'match_type', 'details_date', 'details_time', 'details_venue', 'latitude', 'longitude', 'broadcast_url', 'ticket_url');
 
 		try {
 			$input['total_comments'] = 0;
@@ -169,7 +169,7 @@ class CalloutController extends Controller {
 
 			$data = array();
 
-			foreach (array('user_id', 'category_id', 'title', 'description', 'fighter_a', 'fighter_b', 'photo', 'video', 'match_type', 'details_date', 'details_time', 'details_venue', 'latitude', 'longitude') as $value) {
+			foreach (array('user_id', 'category_id', 'title', 'description', 'fighter_a', 'fighter_b', 'photo', 'video', 'match_type', 'details_date', 'details_time', 'details_venue', 'latitude', 'longitude', 'broadcast_url', 'ticket_url') as $value) {
 				if ($request->has($value)) {
 					$data[$value] = $request->input($value);
 				}

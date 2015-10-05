@@ -927,6 +927,7 @@
             "time": "2015-09-08 17:36:26"
         },
         {
+<<<<<<< HEAD
             "name": "guzzlehttp/promises",
             "version": "1.0.2",
             "source": {
@@ -938,6 +939,19 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/guzzle/promises/zipball/97fe7210def29451ec74923b27e552238defd75a",
                 "reference": "97fe7210def29451ec74923b27e552238defd75a",
+=======
+            "name": "guzzlehttp/psr7",
+            "version": "1.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/guzzle/psr7.git",
+                "reference": "4ef919b0cf3b1989523138b60163bbcb7ba1ff7e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/guzzle/psr7/zipball/4ef919b0cf3b1989523138b60163bbcb7ba1ff7e",
+                "reference": "4ef919b0cf3b1989523138b60163bbcb7ba1ff7e",
+>>>>>>> 5a07581c67244add3aa2f7b84b619ebcbc69b3d0
                 "shasum": ""
             },
             "require": {
@@ -975,7 +989,11 @@
             "keywords": [
                 "promise"
             ],
+<<<<<<< HEAD
             "time": "2015-08-15 19:37:21"
+=======
+            "time": "2015-08-15 19:32:36"
+>>>>>>> 5a07581c67244add3aa2f7b84b619ebcbc69b3d0
         },
         {
             "name": "guzzlehttp/psr7",
@@ -1466,6 +1484,7 @@
         },
         {
             "name": "league/flysystem",
+<<<<<<< HEAD
             "version": "1.0.14",
             "source": {
                 "type": "git",
@@ -1476,6 +1495,18 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/202c7775d959f377e2e302d93e7127c47604438a",
                 "reference": "202c7775d959f377e2e302d93e7127c47604438a",
+=======
+            "version": "1.0.13",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/thephpleague/flysystem.git",
+                "reference": "76caed01a57527599b55919f0746104f288b3d56"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/thephpleague/flysystem/zipball/76caed01a57527599b55919f0746104f288b3d56",
+                "reference": "76caed01a57527599b55919f0746104f288b3d56",
+>>>>>>> 5a07581c67244add3aa2f7b84b619ebcbc69b3d0
                 "shasum": ""
             },
             "require": {
@@ -1546,7 +1577,11 @@
                 "sftp",
                 "storage"
             ],
+<<<<<<< HEAD
             "time": "2015-09-22 19:18:28"
+=======
+            "time": "2015-09-20 13:05:34"
+>>>>>>> 5a07581c67244add3aa2f7b84b619ebcbc69b3d0
         },
         {
             "name": "league/glide",
@@ -2192,6 +2227,53 @@
             "time": "2015-03-26 18:43:54"
         },
         {
+<<<<<<< HEAD
+=======
+            "name": "react/promise",
+            "version": "v2.2.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/reactphp/promise.git",
+                "reference": "3b6fca09c7d56321057fa8867c8dbe1abf648627"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/reactphp/promise/zipball/3b6fca09c7d56321057fa8867c8dbe1abf648627",
+                "reference": "3b6fca09c7d56321057fa8867c8dbe1abf648627",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "React\\Promise\\": "src/"
+                },
+                "files": [
+                    "src/functions_include.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jan Sorgalla",
+                    "email": "jsorgalla@gmail.com"
+                }
+            ],
+            "description": "A lightweight implementation of CommonJS Promises/A for PHP",
+            "time": "2015-07-03 13:48:55"
+        },
+        {
+>>>>>>> 5a07581c67244add3aa2f7b84b619ebcbc69b3d0
             "name": "swiftmailer/swiftmailer",
             "version": "v5.4.1",
             "source": {
