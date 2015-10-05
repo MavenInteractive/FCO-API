@@ -25,10 +25,10 @@ class AddUniqueIndexToVotes extends Migration {
 	 */
 	public function down()
 	{
-		Schema::table('votes', function(Blueprint $table)
-		{
-			$table->dropUnique('votes_user_id_callout_id_unique');
-		});
+		// Schema::table('votes', function(Blueprint $table)
+		// {
+		// 	$table->dropUnique('votes_user_id_callout_id_unique');
+		// });
 	}
 
 }

@@ -20,7 +20,7 @@ class CalloutsTableSeeder extends Seeder {
 		foreach (range(1, 50) as $value) {
 			$data[] = array(
 				'user_id'        => rand(1, 20),
-				'category_id'    => rand(1, 13),
+				'category_id'    => rand(1, 11),
 				'title'          => $faker->sentence(),
 				'description'    => $faker->sentence(),
 				'fighter_a'      => $faker->firstNameMale,

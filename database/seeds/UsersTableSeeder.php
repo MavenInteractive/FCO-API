@@ -40,7 +40,7 @@ class UsersTableSeeder extends Seeder {
 				'password'    => bcrypt('pass1234'),
 				'photo'       => rand(1, 50),
 				'role_id'     => rand(1, 6),
-				'category_id' => rand(1, 13),
+				'category_id' => rand(1, 11),
 				'birth_date'  => $faker->dateTimeBetween('-50 years'),
 				'gender'      => 'male',
 				'status'      => 'A'
