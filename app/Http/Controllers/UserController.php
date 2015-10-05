@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 use App\Upload;
 use App\User;
 use App\Callout;
+use DB;
 use Hash;
 use Input;
 use Illuminate\Http\Request;
@@ -306,7 +307,29 @@ class UserController extends Controller {
 	 */
 	public function reset()
 	{
+		$credentials = Input::only('username', 'password', 'new_password', 'confirm_password');
 
+		if ($credentials['new_password'] <> $credentials['confirm_password']) {
+			return response()->json(['error' => 'password_mismatch1'], Response::HTTP_NOT_ACCEPTABLE);
+		}
+
+		$user = DB::table('users')->where('username', $credentials['username'])->first();
+
+		if ( ! Hash::check($credentials['password'], $user->password)) {
+			return response()->json(['error' => 'password_mismatch2'], Response::HTTP_NOT_ACCEPTABLE);
+		}
+
+		try {
+			$user = User::where('username', $credentials['username'])->firstOrFail();
+
+			$user->password = Hash::make($credentials['new_password']);
+
+			$user->save();
+
+			return response()->json(['success' => 'success_message']);
+		} catch (\Exception $error) {
+			return response()->json(['error' => 'failed_to_update'], Response::HTTP_INTERNAL_SERVER_ERROR);
+		}
 	}
 
 	/**
