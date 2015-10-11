@@ -31,9 +31,9 @@ class CalloutsTableSeeder extends Seeder {
 				'details_date'   => $faker->dateTimeBetween('now', '1 year'),
 				'details_time'   => $faker->time(),
 				'details_venue'  => $faker->address,
-				'total_comments' => rand(1, 100),
-				'total_views'    => rand(1, 100),
-				'total_votes'    => rand(1, 100),
+				'total_comments' => 0,
+				'total_views'    => 0,
+				'total_votes'    => 0,
 				'status'         => 'A'
 			);
 		}
