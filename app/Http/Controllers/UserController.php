@@ -311,13 +311,13 @@ class UserController extends Controller {
 		$credentials = Input::only('username', 'password', 'new_password', 'confirm_password');
 
 		if ($credentials['new_password'] <> $credentials['confirm_password']) {
-			return response()->json(['error' => 'password_mismatch'], Response::HTTP_NOT_ACCEPTABLE);
+			return response()->json(['error' => 'password_mismatch1'], Response::HTTP_NOT_ACCEPTABLE);
 		}
 
 		$user = DB::table('users')->where('username', $credentials['username'])->first();
 
 		if ( ! Hash::check($credentials['password'], $user->password)) {
-			return response()->json(['error' => 'password_mismatch'], Response::HTTP_NOT_ACCEPTABLE);
+			return response()->json(['error' => 'password_mismatch2'], Response::HTTP_NOT_ACCEPTABLE);
 		}
 
 		try {
