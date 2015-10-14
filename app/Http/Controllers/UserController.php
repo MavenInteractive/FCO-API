@@ -341,7 +341,7 @@ class UserController extends Controller {
 	{
 		try {
 			$response = Password::sendResetLink($request->only('email'), function (Message $message) {
-				$message->subject($this->getEmailSubject());
+				$message->subject("Password Reset Link");
 			});
 
 			switch ($response) {
