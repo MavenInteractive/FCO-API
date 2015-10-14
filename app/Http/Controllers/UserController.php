@@ -340,7 +340,7 @@ class UserController extends Controller {
 	public function password(Request $request)
 	{
 		try {
-			$response = Password::sendResetLink($request->only('email'), function (Message $message) {
+			$response = Password::sendResetLink(array('email' => $request->only('email')), function (Message $message) {
 				$message->subject("Password Reset Link");
 			});
 
