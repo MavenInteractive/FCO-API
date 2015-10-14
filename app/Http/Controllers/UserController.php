@@ -11,6 +11,7 @@ use Input;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Storage;
 use JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
@@ -336,16 +337,20 @@ class UserController extends Controller {
 	 * Send password to the email.
 	 *
 	 */
-	public function password()
+	public function password(Request $request)
 	{
-		$input = Input::only('email');
-
 		try {
-			$user = User::where('email', $input['email'])->firstOrFail();
-
-			Mail::send('emails.password', ['token' => 'value'], function($message) {
-				$message->to($input['email'])->subject('Reset Password');
+			$response = Password::sendResetLink($request->only('email'), function (Message $message) {
+				$message->subject($this->getEmailSubject());
 			});
+
+			switch ($response) {
+				case Password::RESET_LINK_SENT:
+					return response()->json(['error' => 'reset_link_sending_failed'], Response::HTTP_INTERNAL_SERVER_ERROR);
+
+				case Password::INVALID_USER:
+					return response()->json(['error' => 'email_not_found'], Response::HTTP_INTERNAL_SERVER_ERROR);
+			}
 
 			return response()->json(['success' => 'success_message']);
 		} catch (\Exception $error) {
