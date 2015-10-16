@@ -340,21 +340,19 @@ class UserController extends Controller {
 	public function password(Request $request)
 	{
 		try {
-			$response = Password::sendResetLink(array('email' => $request->only('email')), function (Message $message) {
+			$response = Password::sendResetLink($request->only('email'), function ($message) {
 				$message->subject("Password Reset Link");
 			});
 
 			switch ($response) {
 				case Password::RESET_LINK_SENT:
-					return response()->json(['error' => 'reset_link_sending_failed'], Response::HTTP_INTERNAL_SERVER_ERROR);
+					return response()->json(['success' => 'reset_link_sent']);
 
 				case Password::INVALID_USER:
 					return response()->json(['error' => 'email_not_found'], Response::HTTP_INTERNAL_SERVER_ERROR);
 			}
-
-			return response()->json(['success' => 'success_message']);
 		} catch (\Exception $error) {
-			return response()->json(['error' => 'email_not_found'], Response::HTTP_INTERNAL_SERVER_ERROR);
+			return response()->json(['error' => 'failed_to_send_email'], Response::HTTP_INTERNAL_SERVER_ERROR);
 		}
 	}
 

@@ -5,28 +5,9 @@
 	<div class="row">
 		<div class="col-md-10 col-md-offset-1">
 			<div class="panel panel-default">
-				<div class="panel-heading">User Lists</div>
+				<div class="panel-heading">Fight Call Out</div>
 				<div class="panel-body">
-					<table class="table table-condensed table-striped">
-						<thead>
-							<tr>
-								<th class="text-right">#</th>
-								<th>Name</th>
-								<th>Username</th>
-								<th>Email</th>
-							</tr>
-						</thead>
-						<tbody>
-							@foreach ($users as $key => $user)
-							<tr>
-								<td class="text-right">{{ $key + 1 }}</td>
-								<td>{{ $user->last_name . ', ' . $user->first_name }}</td>
-								<td>{{ $user->username }}</td>
-								<td>{{ $user->email }}</td>
-							</tr>
-							@endforeach
-						</tbody>
-					</table>
+					Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 				</div>
 			</div>
 		</div>

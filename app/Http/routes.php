@@ -24,7 +24,7 @@ Route::group(['prefix' => 'api/v1.0'], function() {
     Route::post('auth/register', ['as' => 'auth.register', 'uses' => 'UserController@register']);
     Route::post('auth/login', ['as' => 'auth.login', 'uses' => 'UserController@login']);
     Route::post('auth/reset', ['as' => 'auth.reset', 'uses' => 'UserController@reset']);
-    Route::post('password', ['as' => 'password', 'uses' => 'UserController@password']);
+    Route::post('auth/forgot', ['as' => 'auth.forgot', 'uses' => 'UserController@password']);
     Route::get('auth/logout', ['as' => 'auth.logout', 'uses' => 'UserController@logout']);
     Route::get('callouts', ['as' => 'callouts.index', 'uses' => 'CalloutController@index']);
     Route::get('categories', ['as' => 'categories.index', 'uses' => 'CategoryController@index']);
