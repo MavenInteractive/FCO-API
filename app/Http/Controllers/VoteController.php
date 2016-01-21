@@ -4,6 +4,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Callout;
 use App\Vote;
+use DB;
 use Input;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -106,9 +107,22 @@ class VoteController extends Controller {
 			->select('tally', DB::raw('count(*) as count'))
 			->where('callout_id', $callout_id)
 			->groupBy('tally')
-			->lists('tally', 'count');
+			->lists('tally', 'count')
+			->get();
 
-		return response()->json($votes);
+		$tally = ['up' => 0, 'down' => 0];
+
+		if ($result->count() > 0) {
+			foreach ($result as $row) {
+				if ((int) $row->tally > 1) {
+					$tally['up'] = (int) $row->count;
+				} else {
+					$tally['down'] = (int) $row->count;
+				}
+			}
+		}
+
+		return response()->json($tally);
 	}
 
 }
