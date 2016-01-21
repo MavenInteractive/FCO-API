@@ -104,25 +104,26 @@ class VoteController extends Controller {
 	public function tally($callout_id)
 	{
 		$votes = DB::table('votes')
-			->select('tally', DB::raw('count(*) as count'))
+			->select('tally', DB::raw('count(*) as total'))
 			->where('callout_id', $callout_id)
-			->groupBy('tally')
-			->lists('tally', 'count')
-			->get();
+			->groupBy('tally');
 
 		$tally = ['up' => 0, 'down' => 0];
 
-		if ($result->count() > 0) {
-			foreach ($result as $row) {
-				if ((int) $row->tally > 1) {
-					$tally['up'] = (int) $row->count;
-				} else {
-					$tally['down'] = (int) $row->count;
+
+		if ( ! $votes->count()) {
+			return response()->json($tally);
+		} else {
+			foreach ($votes->get() as $vote) {
+				if ($vote->tally > 0) {
+					$tally['up'] = (int) $vote->total;
+				} elseif ($vote->tally < 0) {
+					$tally['down'] = (int) $vote->total;
 				}
 			}
-		}
 
-		return response()->json($tally);
+			return response()->json($tally);
+		}
 	}
 
 }
