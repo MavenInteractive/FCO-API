@@ -110,14 +110,13 @@ class VoteController extends Controller {
 
 		$tally = ['up' => 0, 'down' => 0];
 
-
 		if ( ! $votes->count()) {
 			return response()->json($tally);
 		} else {
 			foreach ($votes->get() as $vote) {
-				if ($vote->tally > 0) {
+				if ((int) $vote->tally > 0) {
 					$tally['up'] = (int) $vote->total;
-				} elseif ($vote->tally < 0) {
+				} elseif ((int) $vote->tally < 0) {
 					$tally['down'] = (int) $vote->total;
 				}
 			}
@@ -125,5 +124,4 @@ class VoteController extends Controller {
 			return response()->json($tally);
 		}
 	}
-
 }
