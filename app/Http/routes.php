@@ -21,15 +21,16 @@ Route::controllers([
 ]);
 
 Route::group(['prefix' => 'api/v1.0'], function() {
-    Route::post('auth/register', ['as' => 'auth.register', 'uses' => 'UserController@register']);
-    Route::post('auth/login', ['as' => 'auth.login', 'uses' => 'UserController@login']);
-    Route::post('auth/reset', ['as' => 'auth.reset', 'uses' => 'UserController@reset']);
-    Route::post('auth/forgot', ['as' => 'auth.forgot', 'uses' => 'UserController@password']);
-    Route::get('auth/logout', ['as' => 'auth.logout', 'uses' => 'UserController@logout']);
-    Route::get('callouts', ['as' => 'callouts.index', 'uses' => 'CalloutController@index']);
-    Route::get('categories', ['as' => 'categories.index', 'uses' => 'CategoryController@index']);
-    Route::get('comments', ['as' => 'comments.index', 'uses' => 'CommentController@index']);
-    Route::get('countries', ['as' => 'countries.index', 'uses' => 'CountriesController@index']);
+    Route::post('auth/register',      ['as' => 'auth.register',    'uses' => 'UserController@register']);
+    Route::post('auth/login',         ['as' => 'auth.login',       'uses' => 'UserController@login']);
+    Route::post('auth/reset',         ['as' => 'auth.reset',       'uses' => 'UserController@reset']);
+    Route::post('auth/forgot',        ['as' => 'auth.forgot',      'uses' => 'UserController@password']);
+    Route::get('auth/logout',         ['as' => 'auth.logout',      'uses' => 'UserController@logout']);
+    Route::get('callouts/{id}/tally', ['as' => 'callouts.tally',   'uses' => 'VotesController@tally']);
+    Route::get('callouts',            ['as' => 'callouts.index',   'uses' => 'CalloutController@index']);
+    Route::get('categories',          ['as' => 'categories.index', 'uses' => 'CategoryController@index']);
+    Route::get('comments',            ['as' => 'comments.index',   'uses' => 'CommentController@index']);
+    Route::get('countries',           ['as' => 'countries.index',  'uses' => 'CountriesController@index']);
 
     Route::resource('uploads', 'UploadController', [
         'only'  => ['show'],
@@ -42,9 +43,9 @@ Route::group([
     'middleware' => [
         'before' => 'jwt.auth'
     ]], function() {
-        Route::post('callouts/upload', ['as' => 'callouts.upload', 'uses' => 'CalloutController@upload']);
-        Route::post('users/{users}/upload', ['as' => 'users.upload', 'uses' => 'UserController@upload']);
-        Route::get('users/{users}/callouts', ['as' => 'users.callouts', 'uses' => 'UserController@callouts']);
+        Route::post('callouts/upload',       ['as' => 'callouts.upload', 'uses' => 'CalloutController@upload']);
+        Route::post('users/{users}/upload',  ['as' => 'users.upload',    'uses' => 'UserController@upload']);
+        Route::get('users/{users}/callouts', ['as' => 'users.callouts',  'uses' => 'UserController@callouts']);
 
         Route::resource('users', 'UserController', [
             'except' => ['create', 'store'],

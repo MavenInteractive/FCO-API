@@ -100,4 +100,13 @@ class VoteController extends Controller {
 		//
 	}
 
+	public function tally($callout_id)
+	{
+		$votes = Vote::count()
+			->where('callout_id', $callout_id)
+			->groupBy('tally');
+
+		return response()->json($votes);
+	}
+
 }
