@@ -99,6 +99,12 @@ class CommentController extends Controller {
 		try {
 			$comment = Comment::create($input);
 
+			$callout = Callout::findOrFail($input['callout_id']);
+
+			$callout->total_comments++;
+
+			$callout->save();
+
 			Mail::send('emails.comment', array(), function($message) use ($input) {
 				$callout = Callout::findOrFail($input['callout_id']);
 
