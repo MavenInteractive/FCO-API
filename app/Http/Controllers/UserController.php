@@ -262,7 +262,7 @@ class UserController extends Controller {
 
 			$user = User::create($credentials);
 
-			Mail::send('emails.register', array(), function($message) {
+			Mail::send('emails.register', array(), function($message) use ($credentials) {
 				$message->to($credentials['email'])->subject('Fight Callout Registration');
 			});
 		} catch (\Exception $error) {

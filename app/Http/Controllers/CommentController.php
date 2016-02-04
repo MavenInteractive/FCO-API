@@ -99,9 +99,8 @@ class CommentController extends Controller {
 		try {
 			$comment = Comment::create($input);
 
-			Mail::send('emails.comment', array(), function($message) {
+			Mail::send('emails.comment', array(), function($message) use ($input) {
 				$callout = Callout::findOrFail($input['callout_id']);
-				$callout = $callout->with('user')->get();
 
 				$message->to($callout->user->email)->subject('New comment');
 			});
