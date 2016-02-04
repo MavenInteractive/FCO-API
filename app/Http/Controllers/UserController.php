@@ -8,6 +8,7 @@ use App\Callout;
 use DB;
 use Hash;
 use Input;
+use Mail;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\File;
@@ -260,6 +261,10 @@ class UserController extends Controller {
 			$credentials['status']      = 'A';
 
 			$user = User::create($credentials);
+
+			Mail::send('emails.register', array(), function($message) {
+				$message->to($credentials['email'])->subject('Fight Callout Registration');
+			});
 		} catch (\Exception $error) {
 			return response()->json(['error' => 'user_already_exists'], Response::HTTP_CONFLICT);
 		}

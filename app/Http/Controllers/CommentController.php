@@ -2,8 +2,10 @@
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Callout;
 use App\Comment;
 use Input;
+use Mail;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -96,6 +98,13 @@ class CommentController extends Controller {
 
 		try {
 			$comment = Comment::create($input);
+
+			Mail::send('emails.comment', array(), function($message) {
+				$callout = Callout::findOrFail($input['callout_id']);
+				$callout = $callout->with('user')->get();
+
+				$message->to($callout->user->email)->subject('New comment');
+			});
 
 			return response()->json(['success' => 'success_message']);
 		} catch (\Exception $error) {
