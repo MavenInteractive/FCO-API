@@ -208,6 +208,7 @@ class CalloutController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
+	/*
 	public function upload(Request $request)
 	{
 		$input = Input::only('photo', 'video');
@@ -245,5 +246,6 @@ class CalloutController extends Controller {
 			return response()->json(['error' => 'bad_request'], Response::HTTP_BAD_REQUEST);
 		}
 	}
+	*/
 
 }
