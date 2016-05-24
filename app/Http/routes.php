@@ -43,7 +43,7 @@ Route::group([
     'middleware' => [
         'before' => 'jwt.auth'
     ]], function() {
-        // Route::post('callouts/upload',       ['as' => 'callouts.upload', 'uses' => 'CalloutController@upload']);
+        Route::post('callouts/upload',       ['as' => 'callouts.upload', 'uses' => 'CalloutController@upload']);
         Route::post('users/{users}/upload',  ['as' => 'users.upload',    'uses' => 'UserController@upload']);
         Route::get('users/{users}/callouts', ['as' => 'users.callouts',  'uses' => 'UserController@callouts']);
 
