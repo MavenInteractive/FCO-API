@@ -17,11 +17,11 @@ class DatabaseSeeder extends Seeder {
 		$this->call('RolesTableSeeder');
 		$this->call('CategoriesTableSeeder');
 		$this->call('UsersTableSeeder');
-		$this->call('CalloutsTableSeeder');
-		$this->call('CommentsTableSeeder');
-		$this->call('ViewsTableSeeder');
-		$this->call('VotesTableSeeder');
-		$this->call('UploadsTableSeeder');
+		// $this->call('CalloutsTableSeeder');
+		// $this->call('CommentsTableSeeder');
+		// $this->call('ViewsTableSeeder');
+		// $this->call('VotesTableSeeder');
+		// $this->call('UploadsTableSeeder');
 		$this->call('CountriesTableSeeder');
 	}
 

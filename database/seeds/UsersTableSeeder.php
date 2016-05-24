@@ -29,7 +29,8 @@ class UsersTableSeeder extends Seeder {
 			'status'      => 'A'
 		));
 
-		$data = array();
+		/*
+$data = array();
 
 		foreach (range(1, 19) as $value) {
 			$data[] = array(
@@ -47,7 +48,7 @@ class UsersTableSeeder extends Seeder {
 			);
 		}
 
-		DB::table('users')->insert($data);
+		DB::table('users')->insert($data); */
 	}
 
 }
