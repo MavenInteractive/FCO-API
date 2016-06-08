@@ -214,12 +214,11 @@ class CalloutController extends Controller {
 
 		try {
 			foreach (['photo', 'video'] as $value) {
-				$file = $request->file($value);
-
-				if ( ! $file) {
+				if ( ! $request->hasFile($value)) {
 					continue;
 				}
 
+				$file     = $request->file($value);
 				$fileName = $file->getFilename();
 				$ext      = $file->getClientOriginalExtension();
 				$mime     = $file->getClientMimeType();
