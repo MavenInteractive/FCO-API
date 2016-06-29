@@ -240,7 +240,7 @@ class CalloutController extends Controller {
 			}
 
 			return response()->json(['upload' => $upload, 'success' => 'success_message']);
-		} catch (\Exception $error) {dd($error);
+		} catch (\Exception $error) {
 			return response()->json(['error' => 'bad_request'], Response::HTTP_BAD_REQUEST);
 		}
 	}
