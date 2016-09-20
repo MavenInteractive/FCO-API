@@ -51,7 +51,8 @@ class UploadController extends Controller {
 	 */
 	public function show(Request $request, $id)
 	{
-		$path = storage_path().'/app';
+		ini_set('memory_limit','512M');
+$path = storage_path().'/app';
 
 		try {
 			$result = Upload::findOrFail($id);

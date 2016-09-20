@@ -10,3 +10,6 @@
 [21-Jan-2016 13:21:18 UTC] PHP Fatal error:  Call to a member function count() on a non-object in /home/kryptonitedirect/public_html/fightcallout/app/Http/Controllers/VoteController.php on line 114
 [26-Jan-2016 01:44:39 UTC] PHP Fatal error:  Class 'App\DB' not found in /home/kryptonitedirect/public_html/fightcallout/app/Callout.php on line 35
 [26-Jan-2016 01:45:31 UTC] PHP Fatal error:  Call to a member function count() on a non-object in /home/kryptonitedirect/public_html/fightcallout/app/Callout.php on line 41
+[20-Sep-2016 06:42:34 UTC] PHP Fatal error:  Allowed memory size of 67108864 bytes exhausted (tried to allocate 13056 bytes) in /home/fight/public_api/vendor/intervention/image/src/Intervention/Image/Gd/Decoder.php on line 119
+[20-Sep-2016 06:43:00 UTC] PHP Fatal error:  Allowed memory size of 67108864 bytes exhausted (tried to allocate 13056 bytes) in /home/fight/public_api/vendor/intervention/image/src/Intervention/Image/Gd/Decoder.php on line 119
+[20-Sep-2016 06:45:35 UTC] PHP Fatal error:  Allowed memory size of 67108864 bytes exhausted (tried to allocate 3264 bytes) in /home/fight/public_api/vendor/intervention/image/src/Intervention/Image/Gd/Decoder.php on line 119
