@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
+use League\Glide\ServerFactory;
+use League\Glide\Responses\LaravelResponseFactory;
 
 class UploadController extends Controller {
 
@@ -47,31 +49,35 @@ class UploadController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function show($id)
+	public function show(Request $request, $id)
 	{
+		$path = storage_path().'/app';
+
 		try {
 			$result = Upload::findOrFail($id);
 
 			if (in_array($result->format, array('image/jpg', 'image/jpeg'))) {
-				$file = Storage::disk('local')->get($result->file_url);
+				$server = ServerFactory::create([
+					'source'   => $path,
+					'cache'    => $path.'/cache',
+					'response' => new LaravelResponseFactory(),
+					'driver'   => 'gd',
+					'presets'  => [
+						'thumbnail' => ['w' =>  200, 'h' => 200, 'fit' => 'crop'],
+						'medium'    => ['w' =>  600, 'h' => 400, 'fit' => 'crop'],
+						'large'     => ['w' => 1200, 'h' => 800, 'fit' => 'crop'],
+					],
+				]);
 
-				return (new Response($file, 200))->header('Content-Type', $result->format);
+				if ($request->has('p')) {
+					$params = $request->only('p');
+				} else {
+					$params = array('p' => 'medium');
+				}
+
+				return $server->getImageResponse($result->file_url, $params);
 			} else {
-				// $fs = Storage::disk('local')->getDriver();
-				//
-				// $stream = $fs->readStream($result->file_url);
-				//
-				// $headers = [
-				// 	"Content-Type"        => $fs->getMimetype($result->file_url),
-				// 	"Content-Length"      => $fs->getSize($result->file_url),
-				// 	"Content-disposition" => "attachment; filename=\"" . basename($result->file_url) . "\"",
-				// ];
-				//
-				// return response()->stream(function() use ($stream) {
-				// 	fpassthru($stream);
-				// }, 200, $headers);
-
-				$stream = new VideoStream(config('filesystems.disks.local.root').'/'.$result->file_url);
+				$stream = new VideoStream($path.$result->file_url);
 				$stream->start();
 			}
 		} catch (\Exception $error) {
