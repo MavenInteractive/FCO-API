@@ -42,7 +42,7 @@ class UserController extends Controller {
 				}
 			}
 
-			$callout->where('status', 'A');
+			$user = $user->where('status', 'A');
 
 			if (isset($input['page'])) {
 				$user = $user->skip($input['page']);
