@@ -33,6 +33,8 @@ class CategoryController extends Controller {
 				}
 			}
 
+			$callout->where('status', 'A');
+
 			if (isset($input['page'])) {
 				$category = $category->skip($input['page']);
 			}

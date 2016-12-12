@@ -32,6 +32,8 @@ class RoleController extends Controller {
 				}
 			}
 
+			$callout->where('status', 'A');
+
 			if (isset($input['page'])) {
 				$role = $role->skip($input['page']);
 			}
