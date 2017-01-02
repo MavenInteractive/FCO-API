@@ -34,6 +34,8 @@ class CommentController extends Controller {
 				}
 			}
 
+			$comment = $comment->where('status', 'A');
+
 			if (isset($input['page'])) {
 				$comment = $comment->skip($input['page']);
 			}

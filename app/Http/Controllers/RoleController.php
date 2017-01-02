@@ -32,6 +32,8 @@ class RoleController extends Controller {
 				}
 			}
 
+			$role = $role->where('status', 'A');
+
 			if (isset($input['page'])) {
 				$role = $role->skip($input['page']);
 			}

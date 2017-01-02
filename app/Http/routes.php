@@ -20,7 +20,7 @@ Route::controllers([
     'password' => 'Auth\PasswordController',
 ]);
 
-Route::group(['prefix' => 'api/v1.0'], function() {
+Route::group(['prefix' => 'api/v1.0', 'middleware' => 'cors'], function() {
     Route::post('auth/register',      ['as' => 'auth.register',    'uses' => 'UserController@register']);
     Route::post('auth/login',         ['as' => 'auth.login',       'uses' => 'UserController@login']);
     Route::post('auth/reset',         ['as' => 'auth.reset',       'uses' => 'UserController@reset']);
@@ -41,7 +41,8 @@ Route::group(['prefix' => 'api/v1.0'], function() {
 Route::group([
     'prefix'     => 'api/v1.0',
     'middleware' => [
-        'before' => 'jwt.auth'
+        'before' => 'jwt.auth',
+        'cors'
     ]], function() {
         Route::post('callouts/upload',       ['as' => 'callouts.upload', 'uses' => 'CalloutController@upload']);
         Route::post('users/{users}/upload',  ['as' => 'users.upload',    'uses' => 'UserController@upload']);

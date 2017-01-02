@@ -36,6 +36,8 @@ class CalloutController extends Controller {
 				}
 			}
 
+			$callout = $callout->where('status', 'A');
+
 			if (isset($input['page'])) {
 				$callout = $callout->skip($input['page']);
 			}

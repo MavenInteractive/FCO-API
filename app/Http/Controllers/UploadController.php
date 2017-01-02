@@ -79,7 +79,7 @@ class UploadController extends Controller {
 
 				return $server->getImageResponse($result->file_url, $params);
 			} else {
-				$stream = new VideoStream($path.$result->file_url);
+				$stream = new VideoStream($path.'/'.$result->file_url);
 				$stream->start();
 			}
 		} catch (\Exception $error) {

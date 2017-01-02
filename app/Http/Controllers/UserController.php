@@ -42,6 +42,8 @@ class UserController extends Controller {
 				}
 			}
 
+			$user = $user->where('status', 'A');
+
 			if (isset($input['page'])) {
 				$user = $user->skip($input['page']);
 			}
